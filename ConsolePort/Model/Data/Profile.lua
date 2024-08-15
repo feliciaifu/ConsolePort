@@ -82,7 +82,7 @@ db:Register('Profile', {
 			note = '观察视角是基于当前视野，临时转动摄像机查看其他视角。';
 		};
 	};
-}, Profile))
+}, Profile)
 
 function Profile:GetObject(path)
 	for section, fields in pairs(self) do
