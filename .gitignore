@@ -3,3 +3,7 @@
 ConsolePort/Libs/External/*
 ConsolePort/Libs/Deprecated/*
 !ConsolePort/Libs/External/__manifest.xml
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/ConsolePort/v17/.wsuo
+.vs/ConsolePort/v17/DocumentLayout.json
