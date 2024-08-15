@@ -37,6 +37,7 @@ Cursor:WrapScript(Cursor.Toggle, 'PreClick', [[
 		self:SetAttribute('type', nil)
 		self:SetAttribute('unit', nil)
 	end
+	
 ]])
 
 Cursor:Wrap('PreClick', [[
@@ -306,7 +307,22 @@ Cursor.Directions = {
 	PADDLEFT  = 'raidCursorLeft';
 	PADDRIGHT = 'raidCursorRight';
 };
+--Raid游标黑名单
+Cursor.FrameBlackList={
+	'PlayerFrame'
+}
+local IsInBlackList=function ( frameName )
+	-- body
+	for frame in pairs(Cursor.FrameBlackList) do
+		if frameName== frame then
+			return true;
+		end
+	end
+	return false;
+end
+	
 
+Cursor:SetAttribute('IsInBlackList',IsInBlackList)
 function Cursor:OnDataLoaded()
 	local modifier = db('raidCursorModifier')
 	modifier = modifier:match('<none>') and '' or modifier..'-';
