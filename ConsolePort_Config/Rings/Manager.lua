@@ -8,33 +8,33 @@ local DEFAULT_RING_BINDING = 'LeftButton';
 
 local BUTTON_WITH_ICON_TEXT = '     %s';
 
-local SELECTED_RING_TEXT = L[[This is your currently selected ring.
-When you press and hold the key binding, all your selected abilities will appear in a ring on the screen.
+local SELECTED_RING_TEXT = L[[这是你当前选择的法环。
+当你按住设置的绑定键时，屏幕上会出现一个环形菜单，显示所有设定的技能。
 
-Tilt your radial stick in the direction of the ability or item you want to use, then release the key binding to commit.]]
-local ADD_NEW_RING_TEXT = L[[|cFFFFFF00Create New Ring|r
-Please choose a name for your new ring:]]
-local REMOVE_RING_TEXT = L[[|cFFFFFF00Remove Ring|r
-Are you sure you want to remove the current ring?]]
-local CLEAR_RING_TEXT = L[[|cFFFFFF00Clear Utility Ring|r
-Are you sure you want to clear your utility ring?]]
+向你要使用的技能或物品方向倾斜摇杆，然后释放绑定键即可执行操作。]]
+local ADD_NEW_RING_TEXT = L[[|cFFFFFF00新建法环|r
+请为你的新法环取一个名字：]]
+local REMOVE_RING_TEXT = L[[|cFFFFFF00移除法环|r
+你确定要移除当前的法环吗？]]
+local CLEAR_RING_TEXT = L[[|cFFFFFF00清空多功能法环|r
+你确定要清空你的多功能法环吗？]]
 local SET_BINDING_TEXT = L[[ 
-|cFFFFFF00Set Binding|r
+|cFFFFFF00设定绑定按键|r
 
-Press a button combination to select a new binding for this ring.
+按下一个组合键为当前法环创建一个新的绑定按键。
 
 ]]
 local RING_MENU_DESC = L(([[
-Create your own ring menus where you can add your items, spells, macros and mounts that you do not want to sacrifice action bar space for.
+创建你自己的环形菜单，你可以把不想占用动作条的物品、技能、宏和坐骑添加进去。
 
-To use, hold the selected binding down, tilt your stick in the direction of the item you want to select, then release the binding.
+使用时，按住绑定按键，然后将摇杆倾斜到你想要选择的物品的方向，接着松开绑定按键。
 
-The default ring, or the |CFF00FF00Utility Ring|r, has special properties to alleviate questing and world interaction, and is not static. It will automatically add and remove items as necessary.
+默认的环形菜单，被称为 |CFF00FF00多功能法环|r，具有特殊功能以减轻任务和世界交互的负担，并且不是静态的。它将根据需要自动添加和移除物品。
 
-If you want to create a ring to use in your rotation and not just for utility, it's highly recommended to use a custom ring for this purpose.
+如果你想创建一个环形菜单用于你的输出循环而不仅仅是为了实用目的，强烈建议以此目的使用自定义环形菜单。
 ]]):trim())
 
-local RING_EMPTY_DESC = L[[You do not have any abilities in this ring yet.]]
+local RING_EMPTY_DESC = L[[你还没有为这个法环赋予任何能力。]]
 
 
 local EXTRA_ACTION_ID = CPAPI.ExtraActionButtonID;
@@ -59,7 +59,7 @@ local function GetRingNameSuggestion()
 end
 
 local function GetRingDisplayName(name)
-	return name and (tonumber(name) and ('Ring |cFF00FFFF%s|r'):format(name) or name)
+	return name and (tonumber(name) and ('法环 |cFF00FFFF%s|r'):format(name) or name)
 end
 
 local function GetRingDisplayNameForIndex(index)
@@ -266,7 +266,7 @@ function AddRingButton:OnClick()
 		OnAccept = function(self)
 			local name = self.editBox:GetText()
 			if not AddRing(name) then
-				CPAPI.Log('Failed to add new ring with name %s, because it already exists.', name)
+				CPAPI.Log('添加名称为 %s 的新法环失败，因为它已经存在。', name)
 			end
 		end;
 		OnHide = function()
@@ -634,7 +634,7 @@ function RingsManager:OnFirstShow()
 						_Setup = 'CPAnimatedLootHeaderTemplate';
 						_Width = 380;
 						_Point = {'TOP', 14, -FIXED_OFFSET};
-						_Text  = L'Ring selection';
+						_Text  = L'法环选择';
 					};
 					RingSelect = {
 						_Type = 'IndexButton';
@@ -718,7 +718,7 @@ function RingsManager:OnFirstShow()
 						_Setup = 'CPIndexButtonBindingHeaderTemplate';
 						_Mixin = IconMapper;
 						_Size  = {380, 40};
-						_Text  = L'Icon:';
+						_Text  = L'图标：';
 						_Point = {'TOP', '$parent.RingBinding', 'BOTTOM', 0, -FIXED_OFFSET};
 						_Hide  = true;
 						{
@@ -787,7 +787,7 @@ function RingsManager:OnFirstShow()
 end
 
 env.Rings = ConsolePortConfig:CreatePanel({
-	name = L'Rings';
+	name = L'法环';
 	mixin = RingsManager;
 	scaleToParent = true;
 	forbidRecursiveScale = true;

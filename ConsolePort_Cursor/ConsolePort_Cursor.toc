@@ -1,7 +1,4 @@
-## Interface: 110002
-## Interface-Classic: 11502
-## Interface-Wrath: 30403
-## Interface-Cata: 40400
+## Interface: 100207
 ## IconTexture: Interface\AddOns\ConsolePort\Assets\Textures\Logo\CP_Thumb
 ## Title: Console Port |cff69ccf0Cursor|r
 ## Notes: Interface cursor module

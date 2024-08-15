@@ -13,15 +13,15 @@ function LayoutSet:OnLoad()
 	self:SetDrawOutline(true)
 	self:CreateFramePool('IndexButton', 'ConsolePortKeyboardLayoutRow', LayoutRow)
 
-	self.Remove:AddTooltipLine(L'Remove ring set')
+	self.Remove:AddTooltipLine(L'移除字环设置')
 	self.Remove:AddTooltipLine(L(
-		'Each ring set represents a smaller ring in the keyboard layout, selected with the left stick, and navigated with the right stick. '..
-		'Click here to remove the entire ring set.'), HIGHLIGHT_FONT_COLOR)
+		'每个环状菜单代表键盘布局中的一个较小的字环，用左摇杆选择，用右摇杆导航。'..
+		'点击此处移除整个字环的设置。'), HIGHLIGHT_FONT_COLOR)
 
-	self.Add:AddTooltipLine(L'Add new row to ring set')
+	self.Add:AddTooltipLine(L'向字环中添加新行')
 	self.Add:AddTooltipLine(L(
-		'Add a new inner selection row to the ring set. ' ..
-		'The ring set automatically adjusts to fit the new row, by spacing selections evenly.'), HIGHLIGHT_FONT_COLOR)
+		'向字环中添加新的可选行。' ..
+		'字环会自动调整，以适应新的行，均匀地间隔分布。'), HIGHLIGHT_FONT_COLOR)
 end
 
 function LayoutSet:SetData(data)
@@ -65,8 +65,8 @@ end
 -- Row
 ---------------------------------------------------------------
 function LayoutRow:OnLoad()
-	self.Remove:AddTooltipLine(L'Remove row')
-	self.Remove:AddTooltipLine(L'Remove this row from the ring set.', HIGHLIGHT_FONT_COLOR)
+	self.Remove:AddTooltipLine(L'移除行')
+	self.Remove:AddTooltipLine(L'从字环中移除该行。', HIGHLIGHT_FONT_COLOR)
 	self:SetSize(LAYOUT_ROW_WIDTH, 40)
 	self:SetDrawOutline(true)
 	local prev;
@@ -115,10 +115,10 @@ end
 function LayoutField:OnEnter()
 	local text = self:GetText()
 	GameTooltip:SetOwner(self, 'ANCHOR_TOPRIGHT')
-	GameTooltip:SetText(text:len() > 0 and text or L'<empty>')
+	GameTooltip:SetText(text:len() > 0 and text or L'< 空 >')
 	local stateRequired = GetRequiredStateFromID(self:GetID())
 	if stateRequired:len() > 0 then
-		GameTooltip:AddLine(L('Hold %s to access.', stateRequired), 1, 1, 1)
+		GameTooltip:AddLine(L('按住 %s 可访问。', stateRequired), 1, 1, 1)
 		GameTooltip:Show()
 	end
 end
@@ -177,7 +177,7 @@ function Layout:OnLoad()
 	self.layoutSets = CreateFramePool('IndexButton', self.Child, 'ConsolePortKeyboardLayoutSet')
 
 	local header = self.Child.Header;
-	header:SetText(L'Layout')
+	header:SetText(L'布局')
 	header:SetPoint('TOP', 0, -8)
 
 	Mixin(self.Child, env.config.ScaleToContentMixin)
@@ -285,7 +285,7 @@ function Config:OnFirstShow()
 							Header = {
 								_Type  = 'FontString';
 								_Setup = {'ARTWORK', 'GameFontNormal'};
-								_Text  = 'Layout';
+								_Text  = '布局';
 								_Point = {'TOP', 0, -16}; 
 							};
 							HelpButton = {
@@ -298,11 +298,11 @@ function Config:OnFirstShow()
 								_Type = 'FontString';
 								_Setup = {'ARTWORK', 'GameTooltipText'};
 								_Text = L(
-									'The gamepad keyboard is organized in nested ring menus. ' ..
-									'On the right, you can customize these rings to fit your needs and personal language.\n\n' ..
-									'Use your left stick to point at and select a ring set, ' ..
-									'then use your right stick to select characters or phrases within the set.\n\n' ..
-									'Hold your assigned modifier(s) to swap the keyboard to a different column.');
+									'游戏手柄键盘由嵌套的环状菜单（简称字环）组成。' ..
+									'在右侧，你可以根据自己的需要和个人语言定制这些字环。\n\n' ..
+									'使用左摇杆指向并选择一套字环，' ..
+									'然后使用右摇杆选择字符或短语。\n\n' ..
+									'按住指定的控制键可将键盘切换到不同的列。');
 								_Points = {
 									{'TOPLEFT', '$parent.HelpButton', 'TOPRIGHT', -4, -16};
 									{'BOTTOMRIGHT', -24, 64};
@@ -313,10 +313,10 @@ function Config:OnFirstShow()
 								_Setup = 'CPIndexButtonBindingHeaderTemplate';
 								_Width = TABBUTTON_WIDTH - FIXED_OFFSET * 6;
 								_Point = {'BOTTOM', 0, 16};
-								_Text  = L'Reset layout to default';
+								_Text  = L'重置键盘布局为默认';
 								_OnClick = function(self)
 									CPAPI.Popup('ConsolePort_Keyboard_ResetLayout', {
-										text = L'Are you sure you want to reset your keyboard layout?';
+										text = L'你确定要重新设置键盘布局吗？';
 										button1 = OKAY;
 										button2 = CANCEL;
 										timeout = 0;
@@ -354,7 +354,7 @@ function Config:OnFirstShow()
 							Header = {
 								_Type  = 'FontString';
 								_Setup = {'ARTWORK', 'GameFontNormal'};
-								_Text  = 'Dictionary';
+								_Text  = '词典';
 								_Point = {'TOP', 0, -16}; 
 							};
 							HelpButton = {
@@ -367,14 +367,14 @@ function Config:OnFirstShow()
 								_Type = 'FontString';
 								_Setup = {'ARTWORK', 'GameTooltipText'};
 								text =
-									'Your dictionary currently contains |CFF00FF00%d|r word(s).\n\n' ..
-									'The dictionary is used to suggest probable words based on your current input, ' ..
-									'allowing you to skip a lot of the manual typing process.\n\n' ..
-									'The dictionary automatically improves over time ' ..
-									'as it learns your typing behavior.\n\n' ..
-									'The initial dictionary is based on phrases from the game.\n\n' ..
-									'Wipe your dictionary if you prefer to have suggestions based ' ..
-									'entirely on your own vernacular.';
+									'你的字典当前包含 |CFF00FF00%d|r 个单词。\n\n' ..
+									'字典用于根据你当前的输入推荐可能的单词，' ..
+									'这样你就可以省略大量的手动输入过程。\n\n' ..
+									'随着时间的推移，词典会自动改进， ' ..
+									'因为它会学习你的打字行为。\n\n' ..
+									'最初的词典以游戏中的短语为基础。\n\n' ..
+									'如果你希望得到完全基于你本土语言的建议，请擦除你的词典，' ..
+									'重新创建本土语言的词典。';
 								_Points = {
 									{'TOPLEFT', '$parent.HelpButton', 'TOPRIGHT', -4, -16};
 									{'BOTTOMRIGHT', -24, 110};
@@ -385,10 +385,10 @@ function Config:OnFirstShow()
 								_Setup = 'CPIndexButtonBindingHeaderTemplate';
 								_Width = TABBUTTON_WIDTH - FIXED_OFFSET * 6;
 								_Point = {'BOTTOM', 0, 16};
-								_Text  = L'Wipe dictionary';
+								_Text  = L'擦除字典';
 								_OnClick = function(self)
 									CPAPI.Popup('ConsolePort_Keyboard_WipeDictionary', {
-										text = L'Are you sure you want to wipe your keyboard dictionary?';
+										text = L'你确定要擦除键盘字典吗？';
 										button1 = OKAY;
 										button2 = CANCEL;
 										timeout = 0;
@@ -410,10 +410,10 @@ function Config:OnFirstShow()
 								_Setup = 'CPIndexButtonBindingHeaderTemplate';
 								_Width = TABBUTTON_WIDTH - FIXED_OFFSET * 6;
 								_Point = {'BOTTOM', '$parent.WipeButton', 'TOP', 0, 8};
-								_Text  = L'Reset dictionary';
+								_Text  = L'重置词典';
 								_OnClick = function(self)
 									CPAPI.Popup('ConsolePort_Keyboard_ResetDictionary', {
-										text = L'Are you sure you want to reset your keyboard dictionary?';
+										text = L'你确定要重置键盘字典吗？';
 										button1 = OKAY;
 										button2 = CANCEL;
 										timeout = 0;
@@ -459,7 +459,7 @@ function Config:OnFirstShow()
 						_Width = CONTAINER_WIDTH - FIXED_OFFSET * 2;
 						_Text  = ('%s %s'):format(
 							'|TInterface\\PaperDollInfoFrame\\Character-Plus:0|t',
-							'Add new ring set');
+							'新增字环');
 						_OnClick = function(self)
 							self:Uncheck()
 							self:GetParent():GetParent():AddData({{}})
@@ -486,7 +486,7 @@ end
 local function OnConfigLoaded(localEnv, config, env)
 	localEnv.config, localEnv.panel, L = env, config, env.L;
 	env.Keyboard = config:CreatePanel({
-		name = L'Keyboard';
+		name = L'键盘';
 		mixin = Config;
 		scaleToParent = true;
 		forbidRecursiveScale = true;

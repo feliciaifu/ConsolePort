@@ -19,7 +19,7 @@ end
 ---------------------------------------------------------------
 local Eye = CreateFromMixins(TooltipButton, {
 ---------------------------------------------------------------
-	instruction = L'Toggle visibility of all modifier flyouts.';
+	instruction = L'切换所有控制键快捷方式的可见性。';
 });
 
 function Eye:OnLoad()
@@ -33,7 +33,7 @@ function Eye:OnShowAll(showAll)
 	local icon = showAll and env.GetAsset([[Textures\Show]]) or env.GetAsset([[Textures\Hide]]);
 	self.NormalTexture:SetTexture(icon)
 	self.PushedTexture:SetTexture(icon)
-	self.title = showAll and L'Hide Flyout Buttons' or L'Show Flyout Buttons';
+	self.title = showAll and L'隐藏快捷按键' or L'显示快捷按键';
 end
 
 function Eye:OnClick()
@@ -44,8 +44,8 @@ end
 ---------------------------------------------------------------
 local Config = CreateFromMixins(TooltipButton, {
 ---------------------------------------------------------------
-	title       = L'Action Bar Configuration';
-	instruction = L'Open the configuration menu for the action bar.';
+	title       = L'动作条配置';
+	instruction = L'打开动作条的配置菜单。';
 });
 
 function Config:OnLoad()
@@ -57,7 +57,7 @@ end
 
 function Config:OnEvent()
 	self:SetEnabled(not InCombatLockdown())
-	self.error = InCombatLockdown() and L'Cannot open configuration menu in combat.' or nil;
+	self.error = InCombatLockdown() and L'无法在战斗中打开配置菜单。' or nil;
 end
 
 function Config:OnClick()
@@ -67,9 +67,9 @@ end
 ---------------------------------------------------------------
 local ExitVehicle = CreateFromMixins(TooltipButton, {
 ---------------------------------------------------------------
-	title       = L'Exit Vehicle';
-	onVehicle   = L'Exit the vehicle you are currently controlling.';
-	onTaxi      = L'Request early landing from the taxi you are currently riding.';
+	title       = L'退出载具';
+	onVehicle   = L'退出当前控制的载具。';
+	onTaxi      = L'要求你现在乘坐的“出租车”提前着陆。';
 	Events      = {
 		'UPDATE_BONUS_ACTIONBAR';
 		'UPDATE_MULTI_CAST_ACTIONBAR';

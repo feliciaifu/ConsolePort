@@ -26,29 +26,23 @@ end
 ---------------------------------------------------------------
 -- Special bindings provider
 ---------------------------------------------------------------
-do local function hold(binding) return ('%s (Hold)'):format(binding) end;
+do local function hold(binding) return ('%s（长按）'):format(binding) end;
 
 	Bindings.Special = {
 		---------------------------------------------------------------
 		-- Targeting
 		---------------------------------------------------------------
 		{	binding = Bindings.Custom.EasyMotion;
-			name    = hold'Target Unit Frames';
+			name    = hold'目标单位框架';
 			desc    = [[
-				Generates unit hotkeys for your on-screen unit frames,
-				allowing you to swap between friendly targets quickly.
+				为你屏幕上的单位框架生成单位热键，使你可以快速在友善目标之间切换。
 
-				To use, hold the binding down, then tap the prompted
-				keys you see on your target of choice, then release 
-				the binding to change your target.
+				使用时，按住绑定按键，然后点击选择的目标上提示的按键，然后松开绑定按键切换你的目标。
 
-				This binding is highly recommended for healers in 5-man
-				game content, as it provides an extremely fast method of
-				targeting in smaller groups.
+				这种按键绑定对5人本时的治疗者非常推荐，它提供一种极快的目标选择方式。
 
-				In raids, the complexity of necessary input
-				to single out your preferred target can be daunting.
-				See Toggle Raid Cursor for a different choice.
+				但在团队中，选中你的目标所需的操作复杂性可能会令人望而却步。
+				查看切换团队光标，获得更多不同的选择。
 			]];
 			image = {
 				file  = CPAPI.GetAsset([[Tutorial\UnitHotkey]]);
@@ -57,22 +51,16 @@ do local function hold(binding) return ('%s (Hold)'):format(binding) end;
 			};
 		};
 		{	binding = Bindings.Custom.RaidCursorToggle;
-			name    = 'Toggle Raid Cursor';
+			name    = '切换团队光标';
 			desc    = [[
-				Toggles a cursor that clamps to your on-screen
-				unit frames, allowing you to heal friendly players
-				while maintaining another target.
+				激活一个光标，锁定在你的小队/团队框架上，允许你在保持对敌对目标锁定的同时，治疗另一名友善目标。
 
-				The raid cursor can also be set to target directly,
-				where moving the cursor will swap your current target.
+				团队光标也可以设置为直接目标选择，移动光标将切换你当前的目标。
 
-				While in use, the raid cursor occupies one set of
-				directional pad combinations to control the cursor position.
+				在使用时，团队光标占用一组方向键组合来控制光标位置。
 
-				When in routing mode, the cursor does not re-route macros or 
-				ambiguous spells, such as a priest's Penance.
-
-				See Target Unit Frames for a different choice.
+				在路径选择模式下，光标不会响应重定向宏或模糊目标的技能，比如牧师的苦修。
+				查看目标单位框架，获取更多不同的选择。
 			]];
 			image = {
 				file  = CPAPI.GetAsset([[Tutorial\RaidCursor]]);
@@ -81,10 +69,10 @@ do local function hold(binding) return ('%s (Hold)'):format(binding) end;
 			};
 		};
 		{	binding = Bindings.Custom.RaidCursorFocus;
-			name    = 'Focus Raid Cursor';
+			name    = '焦点团队光标';
 		};
 		{	binding = Bindings.Custom.RaidCursorTarget;
-			name    = 'Target Raid Cursor';
+			name    = '目标团队光标';
 		};
 		--[[{	name    = hold(FOCUS_CAST_KEY_TEXT);
 			binding = Bindings.Custom.FocusButton;
@@ -93,44 +81,36 @@ do local function hold(binding) return ('%s (Hold)'):format(binding) end;
 		-- Utility
 		---------------------------------------------------------------
 		{	binding = Bindings.Custom.UICursorToggle;
-			name    = 'Toggle Interface Cursor';
+			name    = '切换界面光标';
 		};
 		{	binding = Bindings.Custom.UtilityRing;
-			name    = 'Utility Ring';
+			name    = '多功能法环';
 			desc    = [[
-				A ring menu where you can add your items, spells, macros and
-				mounts that you do not want to sacrifice action bar space for.
+				一个环形菜单，你可以把不想占用动作条的物品、技能、宏和坐骑添加进去。
 
-				To use, hold the binding down, tilt your stick in the direction
-				of the item you want to select, then release the binding.
+				使用时，按住绑定按键，然后将摇杆倾斜到你想要选择的物品的方向，接着松开绑定按键。
 
-				To add items to the ring, follow the prompt from the interface
-				cursor, or alternatively, pick something up on your mouse cursor,
-				and press the binding to drop it in the ring.
+				要将物品或技能添加到环形菜单，按照界面光标的提示操作，或者作为替代方法，用鼠标光标选取物品或技能，按下绑定按键将其放入环形菜单。
 
-				To remove items from the ring, follow the tooltip prompt when you
-				have the item in question focused.
+				要从环形菜单中移除物品，当你聚焦在该物品上时，按照提示进行操作即可。
 
-				The utility ring automatically adds quest items and temporary
-				abilities that you have not placed on your action bar.
+				多功能法环会自动添加你尚未放置在动作条上的任务物品和临时技能。
 			]];
 		};
 		{	binding = Bindings.Custom.PetRing;
-			name    = 'Pet Ring';
-			unit    = 'pet';
+			name    = '宠物法环';
 			desc    = [[
-				A ring menu that lets you control your current pet.
+				一个环形菜单，让你能够控制你当前的宠物。
 			]];
 			texture = [[Interface\ICONS\INV_Box_PetCarrier_01]];
 		};
 		{	binding = Bindings.Custom.MenuRing;
-			name    = 'Menu Ring';
+			name    = '菜单法环';
 			desc    = [[
-				A ring menu that gathers common panels and frequent actions
-				in one place for quick access.
+				一个环形菜单，可以把常用面板和高频使用指令集中起来，方便快速访问。
 
-				The ring can also be accessed from the game menu without a
-				separate binding, by switching page.
+
+				菜单法环也可以通过切换页面，从游戏菜单中访问，无需单独的绑定。
 			]];
 		};
 		---------------------------------------------------------------
@@ -179,19 +159,18 @@ Bindings.Primary = {
 	{	binding = Bindings.Proxied.LeftMouseButton;
 		name    = KEY_BUTTON1;
 		desc    = [[
-			Used to toggle free cursor, allowing you to use your camera stick as a mouse pointer.
+			用于切换自由光标，允许你使用摄像头摇杆作为鼠标指针。
 
-			While one of your buttons is set to emulate left click, this binding cannot be changed.
+			当你的一个按键被设置为模拟左键点击时，此绑定按键不能被更改。
 		]];
 		readonly = function() return GetCVar('GamePadCursorLeftClick') ~= 'none' end;
 	};
 	{	binding = Bindings.Proxied.RightMouseButton;
 		name    = KEY_BUTTON2;
 		desc    = [[
-			Used to toggle center cursor, allowing you to interact with objects and characters
-			in the game world, at a center-fixed mouse position.
+			用于切换中心光标，允许你在游戏中与物体和角色进行交互，光标位置固定在屏幕中心。
 
-			While one of your buttons is set to emulate right click, this binding cannot be changed.
+			当你的一个按钮被设置为模拟右键点击时，此绑定按键不能被更改。
 		]];
 		readonly = function() return GetCVar('GamePadCursorRightClick') ~= 'none' end;
 	};
@@ -200,30 +179,23 @@ Bindings.Primary = {
 	---------------------------------------------------------------
 	{	binding = Bindings.Proxied.InteractTarget;
 		desc    = [[
-			Allows you to interact with NPCs and objects in the game world.
+			允许你与游戏世界中的NPC和物体进行交互。
 
-			Has the same capability as center cursor, but does not require you to
-			aim the cursor or crosshair directly on the target.
+			具有与中心光标相同的功能，但不需要你将光标或瞄准装置直接对准目标。
 
-			Interactables are highlighted when in range.
+			可交互对象在进入范围时会被高亮显示。
 		]];
 	};
 	{	binding = Bindings.Proxied.TargetScan;
 		desc    = [[
-			Scans for enemies in a narrow cone in front of you.
-			Hold down to highlight targets before making the decision
-			to switch targets.
+			在你前方的狭窄锥形区域内轮询敌人。按住按键可在切换目标之前高亮显示目标。
 
-			Especially useful for quickly switching targets
-			while in combat with high precision.
+			在与多个敌人战斗时，对于快速切换目标尤为有用，同时保持高精度。
 
-			The target priority is aim biased, meaning that the
-			target closest to the center of the cone will be
-			selected first. This may result in prioritizing a
-			distant target over a closer one, if the distant
-			target is closer to the center of the cone.
+			目标优先级是通过瞄准定位的，这意味着最接近锥形区域中心的目标将首先被选中。
+			如果远处的目标更接近锥形区域的中心，这可能导致优先选择一个远处目标而不是近处的。
 
-			Recommended as main targeting binding for most players.
+			大多数玩家推荐将其作为主要的目标选择方式。
 		]];
 		image = {
 			file  = CPAPI.GetAsset([[Tutorial\TargetScan]]);
@@ -233,18 +205,13 @@ Bindings.Primary = {
 	};
 	{	binding = Bindings.Proxied.TargetNearest;
 		desc    = [[
-			Switch between the nearest enemy targets in front of you.
-			Without a current target, the centermost enemy will be selected.
-			Otherwise it will cycle through the nearest targets.
+			选中位于你前方最近的敌对目标。如果当前没有目标，将选择中心位置的敌人。否则，它将循环选择最近的敌对目标。
 
-			Hold down to highlight targets before making the decision
-			to switch targets.
+			按住可以高亮显示目标，然后再决定是否切换目标。
 
-			Recommended for use as a secondary targeting binding,
-			or as main targeting binding in casual gameplay or if
-			target scan requires too much precision to be comfortable.
+			推荐用作辅助目标选择方式，或者在休闲游戏或不适应目标扫描方式时，作为主要目标选择方式。
 
-			Not recommended for dungeons or other high precision scenarios.
+			不建议在地下城或其他需要高精度选择的场景中使用。
 		]];
 		image = {
 			file  = CPAPI.GetAsset([[Tutorial\TargetNearest]]);
@@ -257,26 +224,19 @@ Bindings.Primary = {
 	---------------------------------------------------------------
 	{	binding = Bindings.Proxied.Jump;
 		desc    = [[
-			Can also be used to swim up while under water, ascend with
-			flying mounts, and lift off or flap upward while dragonriding.
+			也可以用来在水下向上游动，乘飞行坐骑上升，以及在骑龙时起飞或向上拍动翅膀。
 
-			Jump is useful to bridge gaps in movement while doing a left-handed
-			action that requires your thumb.
+			跳跃功能在进行需要拇指操作的左手动作时，用于弥补移动中的距离。
 
-			In a regular setup, the left stick controls your movement.
-			If you need to press a directional pad combo while on the move,
-			jump can be used to maintain your forward momentum, while briefly
-			taking your thumb off the stick.
+			在常规设置中，左摇杆控制你的移动。如果你需要在移动中按下方向键组合，
+			跳跃可以用来保持你的前进势头，同时让你的拇指短暂离开摇杆。
 		]];
 	};
 	{ 	binding = Bindings.Proxied.ToggleAutoRun;
 		desc    = [[
-			Autorun will cause your character to continue moving
-			in the direction you're facing without any input from you.
+			自动奔跑功能可使你的角色在当前面对的方向上持续移动，而无需进行任何操作。
 
-			Autorun is useful to alleviate thumb strain from long
-			periods of movement, or to free up your thumb to do other
-			things while you're on the move.
+			自动奔跑有助于减轻长时间移动导致的拇指疲劳，或者在移动时解放拇指去做其他事情。
 		]];
 	};
 	---------------------------------------------------------------
@@ -284,38 +244,32 @@ Bindings.Primary = {
 	---------------------------------------------------------------
 	{	binding = Bindings.Proxied.ToggleGameMenu;
 		desc    = [[
-			The menu binding handles all functionality which occurs by pressing
-			the Escape key on a keyboard. It handles different actions based
-			on the current state of the game.
+			绑定按键处理所有通过按下键盘上的Esc键触发的功能。它根据不同的游戏状态执行不同的操作。
 
-			If there are any ongoing actions related to spells or targeting,
-			they will be cancelled. Pressing the binding with an active target
-			will clear it. Pressing the binding while casting a spell will
-			interrupt the spell cast.
+			如果有任何与法术或目标相关的正在进行的动作，它们将被取消。
+			在有活动目标时按下绑定按键将清除它。
+			在施放法术时按下绑定按键键将打断法术施放。
 
-			The binding also handles various other cases depending on what
-			is currently displayed on the screen. For example, if any panel
-			is open, such as the spellbook, the binding will perform the
-			necessary action to close or hide it.
+			绑定按键还根据屏幕上当前显示的内容处理其他各种情况。
+			例如，如果打开任何面板时，如法术书面板，按下绑定按键将执行必要的动作来关闭或隐藏它。
 
-			If none of the above cases apply, the game menu will open or
-			close when pressed.
+			如果上述情况都不适用，按下绑定按键将打开或关闭游戏主菜单。
 		]];
 	};
 	{	binding = Bindings.Proxied.ToggleAllBags;
-		desc    = 'Opens and closes all bags.';
+		desc    = '打开和关闭所有背包。';
 	};
 	{	binding = Bindings.Proxied.ToggleWorldMap;
-		desc = CPAPI.IsRetailVersion and 'Toggles the combined world map and quest log.' or 'Toggles the world map.';
+		desc = CPAPI.IsRetailVersion and '切换显示综合世界地图和任务日志。' or '切换世界地图。';
 	};
 	---------------------------------------------------------------
 	-- Camera
 	---------------------------------------------------------------
 	{	binding = 'CAMERAZOOMIN';
-		desc    = 'Zooms the camera in. Hold for continuous zoom.';
+		desc    = '将摄像头镜头拉近。长按可持续拉近。';
 	};
 	{	binding = 'CAMERAZOOMOUT';
-		desc    = 'Zooms the camera out. Hold for continuous zoom.';
+		desc    = '将摄像头镜头拉远。长按可持续拉远。';
 	};
 	---------------------------------------------------------------
 	-- Misc
@@ -323,14 +277,11 @@ Bindings.Primary = {
 	{	binding = Bindings.Proxied.ExtraActionButton;
 		name    = BINDING_NAME_EXTRAACTIONBUTTON1:gsub('%d', ''):trim();
 		desc    = [[
-			The extra action button houses a temporary ability used in
-			various quests, scenarios and boss encounters.
+			额外动作按键包含了在各种任务、场景和首领战斗中使用的一种临时技能。
 
-			When this binding is unset, the extra action button is always
-			available on the utility ring.
+			当这个绑定未设置时，额外动作按键总是在多功能法环上随时可用。
 
-			This button appears on your gamepad action bar as a normal
-			action button, but you cannot change its content.
+			这个按键在你的游戏手柄动作条上作为一个普通动作按键出现，但你不能更改其内容。
 		]];
 	};
 };
@@ -360,14 +311,11 @@ end
 ---------------------------------------------------------------
 do -- Handle custom rings
 	local CUSTOM_RING_DESC = [[
-		A ring menu where you can add your items, spells, macros and
-		mounts that you do not want to sacrifice action bar space for.
+		一个环形菜单，你可以把不想占用动作条的物品、技能、宏和坐骑添加进去。
 
-		To use, hold the binding down, tilt your stick in the direction
-		of the item you want to select, then release the binding.
+		使用时，按住绑定按键，然后将摇杆倾斜到你想要选择的物品的方向，接着松开绑定按键。
 
-		To remove items from the ring, follow the tooltip prompt when you
-		have the item in question focused.
+		要从环形菜单中移除物品，当你聚焦在该物品上时，按照提示进行操作即可。
 	]]
 	local CUSTOM_RING_ICON = [[Interface\AddOns\ConsolePort_Bar\Assets\Textures\Icons\Ring]]
 

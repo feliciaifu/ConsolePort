@@ -217,11 +217,11 @@ function Keyboard:OnVariableChanged()
 		[db('keyboardAutoCorrButton')]  = self.SpellCorrect;
 	};
 	self.hints = {
-		{L'Enter',   db('keyboardEnterButton')};
-		{L'Erase',   db('keyboardEraseButton')};
-		{L'Space',   db('keyboardSpaceButton')};
-		{L'Escape',  db('keyboardEscapeButton')};
-		{L'Insert',  db('keyboardAutoCorrButton')};
+		{L'回车',   db('keyboardEnterButton')};
+		{L'退格',   db('keyboardEraseButton')};
+		{L'空格',   db('keyboardSpaceButton')};
+		{L'ESC',  db('keyboardEscapeButton')};
+		{L'插入',  db('keyboardAutoCorrButton')};
 	};
 	-- update dictionary settings
 	env.DictMatchPattern  = db('keyboardDictPattern');

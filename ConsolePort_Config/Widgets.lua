@@ -347,8 +347,8 @@ function Number:OnClick(button)
 		self:ToggleClosure(increment, true, self.OnIncrement, self)
 		self.tooltipHints = {
 			env:GetTooltipPromptForClick('LeftClick', APPLY);
-			env:GetTooltipPrompt(decrement, env.L'Decrease');
-			env:GetTooltipPrompt(increment, env.L'Increase');
+			env:GetTooltipPrompt(decrement, env.L'减少');
+			env:GetTooltipPrompt(increment, env.L'增加');
 		};
 	else
 		self:ToggleClosure(decrement, false)

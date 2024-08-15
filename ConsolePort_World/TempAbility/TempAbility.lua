@@ -235,8 +235,8 @@ ConsolePort:AddVariables({
 	showAbilityBriefing = {db.Data.Bool(true);
 		head = ACCESSIBILITY_LABEL;
 		sort = 3;
-		name = 'Show Ability Briefings';
-		desc = 'Displays a briefing for newly acquired abilities.';
-		note = 'Requires ConsolePort World.';
+		name = '显示技能简介';
+		desc = '显示新获得的技能的简介。';
+		note = '需要 ConsolePort World 模块。';
 	};
 })

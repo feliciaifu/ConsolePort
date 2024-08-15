@@ -15,7 +15,7 @@ end
 
 -- Add reload option to addon action forbidden
 do local ADDON_ACTION_FORBIDDEN = StaticPopupDialogs.ADDON_ACTION_FORBIDDEN;
-	ADDON_ACTION_FORBIDDEN.button3 = L'Reload';
+	ADDON_ACTION_FORBIDDEN.button3 = L'重载';
 	ADDON_ACTION_FORBIDDEN.OnAlt = ReloadUI;
 end
 
@@ -71,10 +71,10 @@ if ColorPickerFrame then
 		PADLSTICKDOWN  = CreateColor(CPAPI.HSV2RGB(090, 0.5, 1)):WrapTextInColorCode(L'Green');
 		PADLSTICKLEFT  = CreateColor(CPAPI.HSV2RGB(000, 0.5, 1)):WrapTextInColorCode(L'Red');
 		PADLSTICKRIGHT = CreateColor(CPAPI.HSV2RGB(180, 0.5, 1)):WrapTextInColorCode(L'Cyan');
-		PADRSTICKUP    = L'Increase lightness';
-		PADRSTICKDOWN  = L'Decrease lightness';
-		PADRSTICKLEFT  = L'Decrease opacity';
-		PADRSTICKRIGHT = L'Increase opacity';
+		PADRSTICKUP    = L'增加亮度';
+		PADRSTICKDOWN  = L'减少亮度';
+		PADRSTICKLEFT  = L'减少透明度';
+		PADRSTICKRIGHT = L'增加透明度';
 	}
 	for button, control in pairs(controls) do
 		control:SetText(('%s %s'):format(GetBindingText(button, '_ABBR'), control:GetText()))

@@ -70,13 +70,13 @@ do local frames, visible, buffer, hooks, forbidden, obstructors = {}, {}, {}, {}
 		end
 	end
 
-	local function addHook(widget, script, hook)
+	local function addHook(widget, script, hook, name)
 		local mt = getmetatable(widget)
-		local ix = mt and mt.__index;
-		local fn = type(ix) == 'table' and ix[script];
+		local ix = mt and mt.__index
+		local fn = ix and ix[script]
 		if ( type(fn) == 'function' and not hooks[fn] ) then
 			hooksecurefunc(ix, script, hook)
-			hooks[fn] = true;
+			hooks[fn] = true
 		elseif ( widget.HookScript ) then
 			widget:HookScript(('On%s'):format(script), hook)
 		end
@@ -93,12 +93,13 @@ do local frames, visible, buffer, hooks, forbidden, obstructors = {}, {}, {}, {}
 	-- may use custom metatables, which should still work with this approach.
 	function Stack:AddFrame(frame)
 		local widget = (type(frame) == 'string' and _G[frame]) or (type(frame) == 'table' and frame)
+		local name = (type(frame) == 'string' and frame or type(frame) == 'table' and frame:GetName())
 		if C_Widget.IsFrameWidget(widget) then
 			if ( not forbidden[widget] ) then
 				-- assert the frame isn't hooked twice
 				if ( not frames[widget] ) then
-					addHook(widget, 'Show', showHook)
-					addHook(widget, 'Hide', hideHook)
+					addHook(widget, 'Show', showHook, name)
+					addHook(widget, 'Hide', hideHook, name)
 				end
 
 				frames[widget] = true
@@ -315,7 +316,6 @@ do  local specialFrames, poolFrames, watchers = {}, {}, {};
 				Stack:AddFrame(frame)
 				Stack:UpdateFrames()
 				poolFrames[frame] = true;
-				return true;
 			end
 		end
 	end
@@ -329,23 +329,6 @@ do  local specialFrames, poolFrames, watchers = {}, {}, {};
 		elseif type(method) == 'boolean' then
 			hooksecurefunc(name, CatchNewFrame)
 		end
-	end
-
-	if CPAPI.IsRetailVersion and _G.Menu then
-		local menu = _G.Menu; -- Blizzard's menu manager
-		local mgr  = menu.GetManager();
-		local function CatchOpenMenu()
-			if CatchPoolFrame(mgr:GetOpenMenu()) then
-				-- EXPERIMENTAL: catch submenus, if the menu is tagged
-				for _, tag in ipairs(menu.GetOpenMenuTags()) do
-					menu.ModifyMenu(tag, function(_, description)
-						description:AddMenuAcquiredCallback(CatchPoolFrame)
-					end)
-				end
-			end
-		end
-		hooksecurefunc(mgr, 'OpenMenu', CatchOpenMenu)
-		hooksecurefunc(mgr, 'OpenContextMenu', CatchOpenMenu)
 	end
 
 	function Stack:UpdateFrameTracker()

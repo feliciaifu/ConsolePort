@@ -361,8 +361,8 @@ function BindingsPanel:OnFirstShow()
 					_SetDrawOutline = true;
 					_SetNormalTexture = CPAPI.GetAsset[[Textures\Frame\Import]];
 					_SetHighlightTexture = CPAPI.GetAsset[[Textures\Frame\Import]];
-					TooltipHeader = L'Import';
-					TooltipText = L'Import bindings from a preset or another character.';
+					TooltipHeader = L'导入';
+					TooltipText = L'从预设或其他角色导入按键绑定。';
 					_OnLoad = function(self)
 						local normal, hilite = self:GetNormalTexture(), self:GetHighlightTexture()
 						normal:ClearAllPoints()
@@ -378,7 +378,7 @@ function BindingsPanel:OnFirstShow()
 						local state = not self.Import:IsShown()
 						self.Shortcuts:SetShown(not state)
 						self.Import:SetShown(state)
-						self.Control.Footer:SetText(state and L'Profiles' or CATEGORIES)
+						self.Control.Footer:SetText(state and L'配置文件' or CATEGORIES)
 						self.Control.Footer:Play()
 						flexer:SetEnabled(not state)
 						flexer:GetNormalTexture():SetDesaturated(state)
@@ -393,7 +393,7 @@ function BindingsPanel:OnFirstShow()
 					_SetNormalTexture = [[Interface\Buttons\UIFrameButtons]];
 					_SetHighlightTexture = [[Interface\Buttons\UIFrameButtons]];
 					TooltipHeader = DEFAULTS;
-					TooltipText = L'Reset all bindings to defaults.';
+					TooltipText = L'将所有按键绑定重置为默认值。';
 					_OnLoad = function(self)
 						local normal = self:GetNormalTexture()
 						local hilite = self:GetHighlightTexture()
@@ -447,10 +447,10 @@ function BindingsPanel:OnFirstShow()
 					_Text  = CANCEL;
 					_SetDrawOutline = true;
 					TooltipHeader = CANCEL;
-					TooltipText = L'Discard any changes and revert to the previous configuration.';
+					TooltipText = L'放弃所有更改，并恢复到之前的配置。';
 					_OnClick = function(self)
 						CPAPI.Popup('ConsolePort_Previous_Keybindings', {
-							text = CONFIRM_RESET_TO_PREVIOUS_KEYBINDINGS or L'Do you want to reset all keybindings to their previous configurations?';
+							text = CONFIRM_RESET_TO_PREVIOUS_KEYBINDINGS or L'你确定想将所有按键绑定重置为以前的配置吗？';
 							button1 = OKAY;
 							button2 = CANCEL;
 							timeout = 0;
@@ -506,7 +506,7 @@ function BindingsPanel:OnFirstShow()
 			Catch = {
 				_Type = 'Button';
 				_Setup = {CPAPI.IsRetailVersion and 'SharedButtonLargeTemplate' or 'UIPanelButtonTemplate', 'CPPopupBindingCatchButtonTemplate'};
-				PopupText = ('\n|cFFFFFF00%s|r\n\n%s\n\n'):format(L'Set Binding', BIND_KEY_TO_COMMAND:gsub(' %->', ':\n'));
+				PopupText = ('\n|cFFFFFF00%s|r\n\n%s\n\n'):format(L'设置绑定按键', BIND_KEY_TO_COMMAND:gsub(' %->', ':\n'));
 			};
 			Child = {
 				_Width = LEFT_PANEL_WIDTH;
@@ -539,7 +539,7 @@ function BindingsPanel:OnFirstShow()
 						_Setup = 'CPIndexButtonBindingHeaderTemplate';
 						_Mixin = env.BindingIconMapper;
 						_Size  = {MAPPER_WIDTH, 40};
-						_Text  = L'Icon:';
+						_Text  = L'图标：';
 						_Point = {'TOP', '$parent.Binding', 'BOTTOM', 0, -8};
 						_Hide  = true;
 						{

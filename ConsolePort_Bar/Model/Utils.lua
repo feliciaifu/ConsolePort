@@ -358,7 +358,7 @@ function env.MakeMacroDriverDesc(text, outcome, condition, state, simple, argume
 
 	if condition and state then
 		text = ('%s\n\n%s\n[%s] %s; ...'):format(text,
-			baseColor:WrapTextInColorCode(L'Format'..':'),
+			baseColor:WrapTextInColorCode(L'格式'..'：'),
 			BLUE_FONT_COLOR:WrapTextInColorCode(condition),
 			GREEN_FONT_COLOR:WrapTextInColorCode(state));
 		if simple then
@@ -368,13 +368,13 @@ function env.MakeMacroDriverDesc(text, outcome, condition, state, simple, argume
 		end
 	end
 	if arguments then
-		text = ('%s\n\n%s'):format(text, MakeBulletList('Arguments', arguments, BLUE_FONT_COLOR));
+		text = ('%s\n\n%s'):format(text, MakeBulletList('参数', arguments, BLUE_FONT_COLOR));
 	end
 	if states then
-		text = ('%s\n\n%s'):format(text, MakeBulletList('States', states, GREEN_FONT_COLOR));
+		text = ('%s\n\n%s'):format(text, MakeBulletList('选项', states, GREEN_FONT_COLOR));
 	end
 	if outcome then
-		text = ('%s\n\n%s\n%s'):format(text, baseColor:WrapTextInColorCode(L'Outcome'..':'), L(outcome));
+		text = ('%s\n\n%s\n%s'):format(text, baseColor:WrapTextInColorCode(L'结果'..':'), L(outcome));
 	end
 	return text;
 end

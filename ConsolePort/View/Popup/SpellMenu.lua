@@ -67,9 +67,9 @@ function SpellMenu:AddUtilityRingCommand()
 	for key in db.table.spairs(db.Utility.Data) do
 		local isUniqueAction, existingIndex = db.Utility:IsUniqueAction(key, action)
 		if isUniqueAction then
-			self:AddCommand(L('Add to %s', db.Utility:ConvertSetIDToDisplayName(key)), 'RingBind', {key, action})
+			self:AddCommand(L('添加到 %s 中', db.Utility:ConvertSetIDToDisplayName(key)), 'RingBind', {key, action})
 		elseif existingIndex then
-			self:AddCommand(L('Remove from %s', db.Utility:ConvertSetIDToDisplayName(key)), 'RingClear', {key, action})
+			self:AddCommand(L('从 %s 中移除', db.Utility:ConvertSetIDToDisplayName(key)), 'RingClear', {key, action})
 		end
 	end
 end
@@ -168,13 +168,13 @@ function SpellMenu:MapActionBar(keyChord)
 
 	handle:SetHintFocus(self, IsGamePadFreelookEnabled())
 	if leftClick then
-		handle:AddHint(leftClick, L'Place in slot')
+		handle:AddHint(leftClick, L'放入插槽')
 	end
 	if rightClick then
-		handle:AddHint(rightClick, keyChord and L'Cancel and clear cursor' or L'Clear slot or binding')
+		handle:AddHint(rightClick, keyChord and L'取消和清除光标' or L'清空插槽或按键绑定')
 	end
 	if specialClick and not keyChord then
-		handle:AddHint(specialClick, L'Set binding')
+		handle:AddHint(specialClick, L'设置按键绑定')
 	end
 	if cancelClick then
 		handle:AddHint(cancelClick, CANCEL)
@@ -234,16 +234,16 @@ SpellMenu.CatchBinding = CreateFrame('Button', nil, SpellMenu,
 	(CPAPI.IsRetailVersion and 'SharedButtonLargeTemplate' or 'UIPanelButtonTemplate') .. ',CPPopupBindingCatchButtonTemplate')
 
 local NO_BINDING_TEXT, SET_BINDING_TEXT = [[ 
-|cFFFFFF00Set Binding|r
+|cFFFFFF00设置绑定按键|r
 
-%s in %s, does not have a binding assigned to it.
+在 %s 中的 %s，没有分配给它的绑定按键。
 
-Press a button combination to select a new binding for this slot.
+请按下按键组合，为这个插槽选择一个新的绑定按键。
 
 ]], [[ 
-|cFFFFFF00Set Binding|r
+|cFFFFFF00设置绑定按键|r
 
-Press a button combination to select a new binding for %s.
+请按下按键组合，为 %s 选择一个新的绑定按键。
 
 ]]
 

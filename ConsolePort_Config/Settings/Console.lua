@@ -86,7 +86,7 @@ local DeviceSelect = {};
 function DeviceSelect:Construct()
 	local options = self:GetRawOptions()
 	self:SetDrawOutline(true)
-	self:SetText(L'Device')
+	self:SetText(L'设备')
 	self.Label:ClearAllPoints()
 	self.Label:SetPoint('LEFT', 16, 0)
 	self.Label:SetPoint('RIGHT', -16, 0)
@@ -137,15 +137,15 @@ function DeviceSelect:Update()
 	local device = self:GetCurrentDevice()
 	if device then
 		self:SetText(('%s %s'):format(device.name, self:GetHexSlug(device.vendorID, device.productID)))
-		self.tooltipText = ('Name: %s\nVendor ID: |cFF00FFFF%s|r / |cFF00FF00%s|r\nProduct ID: |cFF00FFFF%s|r / |cFF00FF00%s|r'):format(
+		self.tooltipText = ('名称：%s\n供应商 ID: |cFF00FFFF%s|r / |cFF00FF00%s|r\n产品 ID: |cFF00FFFF%s|r / |cFF00FF00%s|r'):format(
 			device.name,
 			device.vendorID, ConvertToHex(device.vendorID),
 			device.productID, ConvertToHex(device.productID)
 		);
 		self.tooltipText = self.tooltipText .. '\n\n'
-			.. YELLOW_FONT_COLOR:WrapTextInColorCode(L'Click here to reset your device profile.');
+			.. YELLOW_FONT_COLOR:WrapTextInColorCode(L'单击此处重置设备配置文件。');
 	else
-		self:SetText(L'Select a device from the list to continue.')
+		self:SetText(L'从列表中选择一个设备继续。')
 	end
 	db:TriggerEvent('OnMapperDeviceChanged', device, self:GetCurrentDeviceID())
 end
@@ -154,10 +154,10 @@ function DeviceSelect:OnClick()
 	CPIndexButtonMixin.Uncheck(self)
 	local device = self:GetCurrentDevice()
 	if device then
-		local disclaimer = '\n\n'..L'This will not affect your bindings, interface settings or system-wide settings.';
+		local disclaimer = '\n\n'..L'这不会影响你的按键绑定、界面设置或系统设置。';
 		if IsModifierKeyDown() then
 			CPAPI.Popup('ConsolePort_Reset_Devices', {
-				text = L'Are you sure you want to reset all device profiles?'
+				text = L'你确定要重置所有设备配置文件吗？'
 					.. disclaimer;
 				button1 = RESET;
 				button2 = CANCEL;
@@ -175,7 +175,7 @@ function DeviceSelect:OnClick()
 			CPAPI.Popup('ConsolePort_Reset_Device', {
 				text = YELLOW_FONT_COLOR:WrapTextInColorCode(self:GetText())
 					..'\n'
-					.. L'Are you sure you want to reset your device profile?'
+					.. L'你确定要重置设备配置文件吗？'
 					.. disclaimer;
 				button1 = RESET;
 				button2 = CANCEL;
@@ -300,7 +300,7 @@ function PanelMixin:OnFirstShow()
 					_Point = {'BOTTOMLEFT', '$parent', 'TOPLEFT', 8, 8};
 					_OnLoad = function(self)
 						self:SetFontObject(GameFontNormal)
-						self:SetText(L'Selected device profile:')
+						self:SetText(L'已选择的设备配置文件：')
 					end;
 				};
 				HeaderCategories = {
@@ -329,7 +329,7 @@ function PanelMixin:OnFirstShow()
 					_Setup = 'CPAnimatedLootHeaderTemplate';
 					_Width = SHORTCUT_WIDTH;
 					_Point = {'TOP', FIXED_OFFSET * 3, -FIXED_OFFSET};
-					_Text  = L'Device';
+					_Text  = L'设备';
 				};
 			}
 		};

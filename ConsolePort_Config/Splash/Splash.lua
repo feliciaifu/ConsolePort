@@ -5,44 +5,48 @@ local _, env = ...; local db, L = env.db, env.L;
 local WIZARD_WIDTH, FIXED_OFFSET = 900, 8;
 ---------------------------------------------------------------
 local DISCORD_LINK, DISCORD_TEXT = 'https://discord.gg/AWeHd48',
-	'The community where you can find support, discuss gameplay, share ideas, and find like-minded players.' ..
-	'\n\nClick here to join the server.'
+	'在这里，你可以找到支持、讨论游戏、分享想法并找到志同道合的玩家。' ..
+	'\n\n单击此处加入服务器。'
 local PATREON_LINK, PATREON_TEXT = 'https://www.patreon.com/consoleport',
-	'The development and maintenance of this addon takes a lot of time and effort, but ConsolePort will always be completely free to use. ' ..
-	'\n\nBecome a supporter on Patreon to unlock your Discord flair, and in turn support the future of the project.' ..
-	'\n\nClick here to become a patron.'
+	'该插件的开发和维护需要大量的时间和精力，但 ConsolePort 将始终完全免费使用。' ..
+	'\n\n在 Patreon 上成为支持者，释放你的 Discord 天赋，进而支持项目的未来。' ..
+	'\n\n单击此处成为赞助人。'
 local PAYPAL_LINK, PAYPAL_TEXT = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5ADQW5L2FE4XC',
-	'Donations are invested right back into the development and maintenance of the addon. ' ..
-	'Any contribution, big or small, is highly appreciated.' ..
-	'\n\nClick here to donate using PayPal.'
+	'捐款将直接投入到插件的开发和维护中。' ..
+	'无论贡献大小，我们都将不胜感激。' ..
+	'\n\n单击此处使用 PayPal 捐款。'
+local NEWBEE_LINK, NEWBEE_TEXT = 'https://www.newbeebox.com',
+	'汉化者将在新手盒子平台持续提供本地语言支持。' ..
+	'邀请码：UQMtSKYe3Nlu' ..
+	'\n\n单击此处了解新手盒子。'
 ---------------------------------------------------------------
 
 local Content = {
 	{	panel = 'Devices';
-		name  = L'Device';
-		help  = L'Select your device.';
+		name  = L'设备';
+		help  = L'选择你的操控设备';
 		pred  = function()
 			return not db('Gamepad/Active')
 		end;
 	};
 	{	
 		panel = 'Emulation';
-		name  = L'Buttons';
-		help  = L'Set your emulation buttons.';
+		name  = L'按键';
+		help  = L'设置你的模拟按键';
 		pred  = function()
 			return (db('tutorialProgress') == 1);
 		end;
 	};
 	{	panel = 'Cursor';
 		name  = MOUSE_LABEL;
-		help  = L'Customize your cursor settings.';
+		help  = L'自定义你的光标设置';
 		pred  = function()
 			return (db('tutorialProgress') == 2);
 		end;
 	};
 	{	panel = 'Links';
 		name  = GAMEMENU_SUPPORT;
-		help  = L'Before you go on your next adventure...';
+		help  = L'在你进行下一次探险之前……';
 		pred  = function()
 			return (db('tutorialProgress') == 3);
 		end;
@@ -181,7 +185,7 @@ end
 
 local function ShowExternalLink(name, link)
 	CPAPI.Popup('ConsolePort_External_Link', {
-		text = L('Link to %s.\nCtrl+A to select and Ctrl+C to copy.\n\nPaste (Ctrl+V) the link in your web browser.', name);
+		text = L('跳转到 %s.\nCtrl+A 全选后 Ctrl+C 复制。\n\n打开你的网页浏览器后粘贴 （Ctrl+V）访问。', name);
 		button1 = CLOSE;
 		showAlert = true;
 		timeout = 0;
@@ -387,7 +391,7 @@ function Splash:OnFirstShow()
 						_Point = {'TOP', '$parent.Logo', 'BOTTOM', 0, -FIXED_OFFSET};
 						_OnLoad = function(self)
 							self:SetFontObject(CPHeaderFont);
-							self:SetText(L'Select your device.');
+							self:SetText(L'选择你的操控设备。');
 						end;
 					};
 					Continue = {
@@ -453,7 +457,7 @@ function Splash:OnFirstShow()
 								_Mixin = env.OpaqueMixin;
 								_Setup = {'BackdropTemplate', 'CPFrameWithTooltipTemplate'};
 								_Size  = {200, 200};
-								_Point = {'CENTER', 0, 0};
+								_Point = {'CENTER', -110, 0};
 								_Backdrop = CPAPI.Backdrops.Frame;
 								_SetNormalTexture = CPAPI.GetAsset('Textures\\Logo\\Discord');
 								_SetPushedTexture = CPAPI.GetAsset('Textures\\Logo\\Discord');
@@ -472,7 +476,7 @@ function Splash:OnFirstShow()
 									pushed:SetPoint('CENTER', 0, 6)
 									hilite:SetVertexColor(0.3, 0.45, 0.84)
 
-									self:AddTooltipLine(L'Join Discord')
+									self:AddTooltipLine(L'加入 Discord')
 									self:AddTooltipLine(L(DISCORD_TEXT), HIGHLIGHT_FONT_COLOR)
 								end;
 								_OnClick = function(self)
@@ -482,7 +486,7 @@ function Splash:OnFirstShow()
 									Label = {
 										_Type = 'FontString';
 										_Setup = {'ARTWORK', 'GameFontHighlightMedium'};
-										_Text  = L'Join Discord';
+										_Text  = L'加入 Discord';
 										_Point = {'BOTTOM', 0, 32};
 									};
 								};
@@ -492,7 +496,7 @@ function Splash:OnFirstShow()
 								_Mixin = env.OpaqueMixin;
 								_Setup = {'BackdropTemplate', 'CPFrameWithTooltipTemplate'};
 								_Size  = {200, 200};
-								_Point = {'RIGHT', 0, 0};
+								_Point = {'RIGHT', 110, 0};
 								_Backdrop = CPAPI.Backdrops.Frame;
 								_SetNormalTexture = CPAPI.GetAsset('Textures\\Logo\\Patreon');
 								_SetPushedTexture = CPAPI.GetAsset('Textures\\Logo\\Patreon');
@@ -510,7 +514,7 @@ function Splash:OnFirstShow()
 									end
 									pushed:SetPoint('CENTER', 0, 6)
 
-									self:AddTooltipLine(L'Support on Patreon')
+									self:AddTooltipLine(L'Patreon 支持')
 									self:AddTooltipLine(L(PATREON_TEXT), HIGHLIGHT_FONT_COLOR)
 								end;
 								_OnClick = function(self)
@@ -520,7 +524,7 @@ function Splash:OnFirstShow()
 									Label = {
 										_Type = 'FontString';
 										_Setup = {'ARTWORK', 'GameFontHighlightMedium'};
-										_Text  = L'Support on Patreon';
+										_Text  = L'Patreon 支持';
 										_Point = {'BOTTOM', 0, 32};
 									};
 								};
@@ -530,7 +534,7 @@ function Splash:OnFirstShow()
 								_Mixin = env.OpaqueMixin;
 								_Setup = {'BackdropTemplate', 'CPFrameWithTooltipTemplate'};
 								_Size  = {200, 200};
-								_Point = {'LEFT', 0, 0};
+								_Point = {'LEFT', -110, 0};
 								_Backdrop = CPAPI.Backdrops.Frame;
 								_SetNormalTexture = CPAPI.GetAsset('Textures\\Logo\\PayPal');
 								_SetPushedTexture = CPAPI.GetAsset('Textures\\Logo\\PayPal');
@@ -548,7 +552,7 @@ function Splash:OnFirstShow()
 									end
 									pushed:SetPoint('CENTER', 0, 6)
 
-									self:AddTooltipLine(L'Donate on PayPal')
+									self:AddTooltipLine(L'PayPal 捐助')
 									self:AddTooltipLine(L(PAYPAL_TEXT), HIGHLIGHT_FONT_COLOR)
 								end;
 								_OnClick = function(self)
@@ -558,7 +562,45 @@ function Splash:OnFirstShow()
 									Label = {
 										_Type = 'FontString';
 										_Setup = {'ARTWORK', 'GameFontHighlightMedium'};
-										_Text  = L'Donate on PayPal';
+										_Text  = L'PayPal 捐助';
+										_Point = {'BOTTOM', 0, 32};
+									};
+								};
+							};
+							NewBee = {
+								_Type  = 'Button';
+								_Mixin = env.OpaqueMixin;
+								_Setup = {'BackdropTemplate', 'CPFrameWithTooltipTemplate'};
+								_Size  = {200, 200};
+								_Point = {'CENTER', 110, 0};
+								_Backdrop = CPAPI.Backdrops.Frame;
+								_SetNormalTexture = CPAPI.GetAsset('Textures\\Logo\\NewBee');
+								_SetPushedTexture = CPAPI.GetAsset('Textures\\Logo\\NewBee');
+								_SetHighlightTexture = CPAPI.GetAsset('Textures\\Logo\\NewBee');
+								_OnLoad = function(self)
+									env.OpaqueMixin.OnLoad(self)
+									local normal, pushed, hilite = 
+										self:GetNormalTexture(),
+										self:GetPushedTexture(),
+										self:GetHighlightTexture();
+									for _, texture in ipairs({normal, pushed, hilite}) do
+										texture:ClearAllPoints()
+										texture:SetSize(100, 100)
+										texture:SetPoint('CENTER', 0, 8)
+									end
+									pushed:SetPoint('CENTER', 0, 6)
+
+									self:AddTooltipLine(L'汉化：胡里胡涂')
+									self:AddTooltipLine(L(NEWBEE_TEXT), HIGHLIGHT_FONT_COLOR)
+								end;
+								_OnClick = function(self)
+									ShowExternalLink('NewBee', NEWBEE_LINK)
+								end;
+								{
+									Label = {
+										_Type = 'FontString';
+										_Setup = {'ARTWORK', 'GameFontHighlightMedium'};
+										_Text  = L'汉化：胡里胡涂';
 										_Point = {'BOTTOM', 0, 32};
 									};
 								};

@@ -28,10 +28,11 @@ local Handle = Interface.ClusterHandle(); -- reuse one handle instance and warp 
 
 Presets.Default = {
 	name       = DEFAULT;
-	desc       = 'A cluster bar with a toolbar below it.';
+	desc       = '一个集群栏，下方有一个工具栏。';
 	visibility = env.Const.ManagerVisibility;
 	children = {
 		Toolbar  = Interface.Toolbar:Render {
+			name = '工具栏';
 			totem = { pos = { y = 18 } };
 		};
 		VehicleL = Interface.Page : Render {
@@ -71,8 +72,8 @@ Presets.Default = {
 };
 
 Presets.Orthodox = {
-	name       = 'Orthodox';
-	desc       = 'A cluster bar with a toolbar below it, laid out horizontally.';
+	name       = '标准模式';
+	desc       = '水平排列的集群栏，下面有一个工具栏。';
 	visibility = env.Const.ManagerVisibility;
 	children = {
 		Toolbar  = Interface.Toolbar:Render {
@@ -123,8 +124,8 @@ Presets.Orthodox = {
 ---------------------------------------------------------------
 Handle = Interface.GroupButton(); -- reuse one handle instance and warp it
 Presets.CrossbarMinimal = {
-	name 	   = 'Crossbar: Minimal';
-	desc       = 'Group buttons in a single crossbar layout, with modifier swapping.';
+	name 	   = '横向布局：最小化';
+	desc       = '将按键组合在一个单一的横向布局中，并允许控制键切换。';
 	visibility = env.Const.ManagerVisibility;
 	children = {
 		Toolbar = Interface.Toolbar : Render {
@@ -158,8 +159,8 @@ Presets.CrossbarMinimal = {
 };
 
 Presets.Crossbar = {
-	name 	   = 'Crossbar: Standard';
-	desc       = 'Group buttons for left and right triggers, with modifier swapping.';
+	name 	   = '横向布局：标准化';
+	desc       = '为左右键分组按键，并允许控制键切换。';
 	visibility = env.Const.ManagerVisibility;
 	children = {
 		Toolbar = Interface.Toolbar : Render {
@@ -260,8 +261,8 @@ Presets.Crossbar = {
 };
 
 Presets.CrossbarTriple = {
-	name 	   = 'Crossbar: Triple';
-	desc       = 'Group buttons in three layouts, with center modifier swapping.';
+	name 	   = '横向布局：三集群';
+	desc       = '以三个集群对按键进行分组，并可使用中间的控制键切换。';
 	visibility = env.Const.ManagerVisibility;
 	children = {
 		Toolbar = Interface.Toolbar : Render {
@@ -379,8 +380,8 @@ Presets.CrossbarTriple = {
 };
 
 Presets.Keyboard = {
-	name       = 'Keyboard';
-	desc       = 'A regular action bar.';
+	name       = '键盘';
+	desc       = '一个常规的动作条。';
 	visibility = env.Const.ManagerVisibility;
 	children = {
 		Toolbar = Interface.Toolbar:Render {

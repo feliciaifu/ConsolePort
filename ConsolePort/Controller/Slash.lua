@@ -233,7 +233,7 @@ SLASH_FUNCTIONS = {
 	end;
 	resetall = function()
 		CPAPI.Popup('ConsolePort_Uninstall_Settings', {
-			text = 'This action will remove all your saved settings and reload your interface.';
+			text = '此操作将删除所有已保存的设置并重新加载界面。';
 			button1 = OKAY;
 			button2 = CANCEL;
 			timeout = 0;
@@ -251,7 +251,7 @@ SLASH_FUNCTIONS = {
 	end;
 	uninstall = function()
 		CPAPI.Popup('ConsolePort_Uninstall_Addon', {
-			text = 'This action will remove all your saved settings and reload your interface.';
+			text = '此操作将删除所有已保存的设置并重新加载界面。';
 			button1 = OKAY;
 			button2 = CANCEL;
 			timeout = 0;

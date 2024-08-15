@@ -6,7 +6,7 @@ local function PATH(name, child) return name..'/'..child end;
 
 local ROOT = 'Layout';
 local BASE = PATH(ROOT, 'children');
-local COPY = CALENDAR_COPY_EVENT or L'Copy';
+local COPY = CALENDAR_COPY_EVENT or L'复制';
 
 local function ConvertName(name, path)
 	local text = name or path;
@@ -46,13 +46,13 @@ local function ValidatePresets(presets)
 		return false;
 	end
 	for id, preset in pairs(presets) do
-		CPAPI.Log('Validating preset %s...', BLUE_FONT_COLOR:WrapTextInColorCode(id))
+		CPAPI.Log('验证预设 %s...', BLUE_FONT_COLOR:WrapTextInColorCode(id))
 		if not env.IsV1Layout(preset) and not env.IsV2Layout(preset) then
-			CPAPI.Log('Preset %s is not a valid layout.', ORANGE_FONT_COLOR:WrapTextInColorCode(id))
+			CPAPI.Log('预设 %s 不是有效的布局。', ORANGE_FONT_COLOR:WrapTextInColorCode(id))
 			return false;
 		end
 	end
-	CPAPI.Log('All presets are valid.')
+	CPAPI.Log('所有预设均有效。')
 	return true;
 end
 
@@ -93,16 +93,8 @@ local function GetEndpoint(path)
 end
 
 function LoadoutSetting:OnExpandOrCollapse()
-	local icon, hasChildren, isChecked = self.Icon, self:HasChildren(), self:GetChecked();
-	self:ToggleChildren(isChecked)
-	icon:SetShown(hasChildren)
-	if hasChildren then
-		CPAPI.SetAtlas(icon, ('Waypoint-MapPin-Minimap-%s'):format(isChecked and 'Tracked' or 'Untracked'))
-	end
-end
-
-function LoadoutSetting:HasChildren()
-	return self.children and next(self.children) ~= nil;
+	self.Icon:SetShown(self:GetChecked())
+	self:ToggleChildren(self:GetChecked())
 end
 
 function LoadoutSetting:AddChild(child)
@@ -228,7 +220,7 @@ local DeleteButton = {
 	icon         = [[Interface\RAIDFRAME\ReadyCheck-NotReady]];
 	iconSize     = 18;
 	tooltipTitle = RED_FONT_COLOR:WrapTextInColorCode(DELETE);
-	tooltipText  = L('Delete this element.');
+	tooltipText  = L('删除此元素。');
 	popupName    = 'ConsolePort_Mutable_Confirm_Delete';
 	popupData    = {
 		button1   = YES;
@@ -246,7 +238,7 @@ local DeleteButton = {
 			data.target:LockHighlight()
 			data.trigger:SetButtonState('PUSHED')
 		end;
-		text = L('Are you sure you want to delete %s from %s?',
+		text = L('你确定要删除 %s 吗？它位于 %s 中。',
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'),
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
 	};
@@ -294,7 +286,7 @@ local CopyButton = {
 	icon         = [[Interface\BUTTONS\UI-GuildButton-OfficerNote-Up]];
 	iconSize     = 18;
 	tooltipTitle = BLUE_FONT_COLOR:WrapTextInColorCode(COPY);
-	tooltipText  = L('Copy this element to a new name.');
+	tooltipText  = L('将此元素复制为一个新的名字。');
 	popupName    = 'ConsolePort_Mutable_Confirm_Copy';
 	popupData    = {
 		button1    = OKAY;
@@ -319,7 +311,7 @@ local CopyButton = {
 			local parent = editBox:GetParent()
 			parent.button1:SetEnabled(IsElementNameValid(editBox, data.owner.config))
 		end;
-		text = L('Copy %s from %s:',
+		text = L('复制 %s 来自 %s:',
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'),
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
 	};
@@ -530,8 +522,8 @@ local Preset = {
 ---------------------------------------------------------------
 	Reset = nop;
 	Export = {
-		tooltipTitle = L'Export';
-		tooltipText  = L'Export this preset to a string that can be shared with others.';
+		tooltipTitle = L'导出';
+		tooltipText  = L'将此预设导出为可与其他人分享的字符串。';
 		icon         = CPAPI.GetAsset([[Textures\Frame\Export]]);
 		iconSize     = 18;
 		onClickHandler = function(self)
@@ -645,7 +637,7 @@ end
 Loadout.LayoutControls = {
 	{
 		tooltipTitle = GREEN_FONT_COLOR:WrapTextInColorCode(ADD);
-		tooltipText  = L'Add a new element to your loadout.';
+		tooltipText  = L'向布局配置添加一个新的元素';
 		icon         = [[Interface\PaperDollInfoFrame\Character-Plus]];
 		iconSize     = 18;
 		onClickHandler = function(self)
@@ -654,7 +646,7 @@ Loadout.LayoutControls = {
 	};
 	{
 		tooltipTitle = SAVE;
-		tooltipText  = L'Save your current loadout to the preset list.';
+		tooltipText  = L'将你当前的布局配置保存到预设配置列表中。';
 		icon         = [[Interface\BUTTONS\UI-GuildButton-PublicNote-Up]];
 		iconSize     = 18;
 		onClickHandler = function(self)
@@ -665,8 +657,8 @@ Loadout.LayoutControls = {
 
 Loadout.PresetControls = {
 	{
-		tooltipTitle = L'Import';
-		tooltipText  = L'Import serialized preset(s) from an external source.';
+		tooltipTitle = L'导入';
+		tooltipText  = L'从外部来源导入布局配置字符串。';
 		icon         = CPAPI.GetAsset([[Textures\Frame\Import]]);
 		iconSize     = 18;
 		onClickHandler = function(self)
@@ -679,8 +671,8 @@ Loadout.PresetControls = {
 		end;
 	};
 	{
-		tooltipTitle = L'Export All';
-		tooltipText  = L'Export all your custom presets to a string that can be shared with others.';
+		tooltipTitle = L'导出所有预设';
+		tooltipText  = L'将所有自定义预设导出为字符串，以便与其他人分享。';
 		icon         = CPAPI.GetAsset([[Textures\Frame\Export]]);
 		iconSize     = 18;
 		onClickHandler = function(self)
@@ -688,7 +680,7 @@ Loadout.PresetControls = {
 			local parent = self:GetParent()
 			local popupName = 'ConsolePort_Loadout_Export';
 			local popupData = parent.Popups[popupName];
-			CPAPI.Popup(popupName, popupData, L'Presets', nil, {
+			CPAPI.Popup(popupName, popupData, L'预设', nil, {
 				owner  = parent;
 				string = env.SharedConfig.Env.Serialize(CopyTable(env.Presets));
 			})
@@ -714,7 +706,7 @@ Loadout.Popups = {
 			local parent = editBox:GetParent()
 			parent.button1:SetEnabled(IsElementNameValid(editBox, data.owner.config))
 		end;
-		text = L('Please provide a unique name for a new %s in %s:',
+		text = L('请为新的 %s 提供一个唯一的名称：',
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'),
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
 	};
@@ -729,7 +721,7 @@ Loadout.Popups = {
 		OnHide = function(_, data)
 			CPIndexButtonMixin.Uncheck(data.trigger)
 		end;
-		text = L('Are you sure you want to overwrite %s with %s?',
+		text = L('你确定要将 %s 用 %s 覆盖吗？',
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'),
 			YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
 	};
@@ -737,7 +729,7 @@ Loadout.Popups = {
 		button1   = OKAY;
 		button2   = CANCEL;
 		enterClicksFirstButton = true;
-		text = L('Save preset from %s:', YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
+		text = L('从 %s 保存预设：', YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
 		OnShow = function(popup, data)
 			local dialog = popup.insertedFrame;
 			for key, value in pairs(data) do
@@ -766,7 +758,7 @@ Loadout.Popups = {
 	ConsolePort_Loadout_Export = {
 		button1    = OKAY;
 		hasEditBox = 1;
-		text = L('Export %s to a string:', YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
+		text = L('将 %s 导出为字符串：', YELLOW_FONT_COLOR:WrapTextInColorCode('%s'));
 		enterClicksFirstButton = true;
 		OnShow = function(popup, data)
 			popup.editBox:SetText(data.string)
@@ -784,7 +776,7 @@ Loadout.Popups = {
 		button2    = CANCEL;
 		hasEditBox = 1;
 		enterClicksFirstButton = true;
-		text = L('Import serialized preset(s):');
+		text = L('导入预设字符串：');
 		OnShow = function(popup)
 			popup.button1:Disable()
 		end;
@@ -936,23 +928,23 @@ function Loadout:GetPresetSaveFrame()
 
 		frame.advancedHeader = CreateHeader(ADVANCED_LABEL)
 		frame.options = CreateCheckBox(
-			L'Export current options',
-			L('Include the current options from the %s tab in the preset data.', BLUE_FONT_COLOR:WrapTextInColorCode(OPTIONS))
+			L'导出当前选项',
+			L('将当前选项从 %s 标签包含到预设数据中。', BLUE_FONT_COLOR:WrapTextInColorCode(OPTIONS))
 		);
 
 		frame.pager = CreateCheckBox(
-			L'Export action page logic',
-			L'Include the current action page logic in the preset data.'
+			L'导出动作页面逻辑',
+			L'在预设数据中包含当前动作页面逻辑。'
 		);
 		frame.pager.disableTooltipHints = true;
 
-		frame.showHeader = CreateHeader(L'Global Visibility')
+		frame.showHeader = CreateHeader(L'全局可见性')
 		frame.visibility = CreateEditBox(60)
 
 		self.presetSaveFrame = frame;
 	end
 
-	local tooltipHints = ( next(env.Settings) ~= nil ) and { NORMAL_FONT_COLOR:WrapTextInColorCode(L'Modifications'..':') };
+	local tooltipHints = ( next(env.Settings) ~= nil ) and { NORMAL_FONT_COLOR:WrapTextInColorCode(L'控制键'..'：') };
 	if tooltipHints then
 		for variableID in db.table.spairs(env.Settings) do
 			local variable = env.Variables[variableID];
@@ -1063,7 +1055,7 @@ function Loadout:DrawHeaderControls(header, controls)
 end
 
 function Loadout:DrawPresets(layoutIndex)
-	self.presetHeader = self:CreateHeader('Presets')
+	self.presetHeader = self:CreateHeader('预设配置')
 	self.presetHeader.layoutIndex = layoutIndex()
 
 	self:DrawHeaderControls(self.presetHeader, self.PresetControls)
@@ -1113,7 +1105,7 @@ end
 -- Loadout management
 ---------------------------------------------------------------
 function Loadout:DrawConfiguration(layoutIndex)
-	self.layoutHeader = self:CreateHeader('Loadout')
+	self.layoutHeader = self:CreateHeader('布局配置')
 	self.layoutHeader.layoutIndex = layoutIndex()
 
 	self:DrawHeaderControls(self.layoutHeader, self.LayoutControls)
@@ -1216,7 +1208,7 @@ function Loadout:OnCleaned()
 end
 
 function Loadout:GetText()
-	return L'your current loadout';
+	return L'你的自定义布局配置';
 end
 
 ---------------------------------------------------------------

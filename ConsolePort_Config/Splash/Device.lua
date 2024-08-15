@@ -10,7 +10,7 @@ function Device:OnClick()
 	local device = self.Device;
 	ConsolePort:SetCursorNode(env.Splash.Wizard.Child.Continue, true)
 	CPAPI.Popup('ConsolePort_Apply_Preset', {
-		text = L('Do you want to load settings for %s?\n\nThis will configure your modifiers, mouse emulation buttons, and previously saved device settings (if any).', device.Name);
+		text = L('你确定要加载设置为 %s 吗？\n\n这将重新配置你的控制键、鼠标模拟按键以及之前保存的设备设置（如果有的话）。', device.Name);
 		button1 = OKAY;
 		button2 = CANCEL;
 		timeout = 0;
@@ -25,7 +25,7 @@ function Device:OnClick()
 		end;
 		OnHide = function()
 			CPAPI.Popup('ConsolePort_Reset_Keybindings', {
-				text = ('%s\n\n%s'):format(CONFIRM_RESET_KEYBINDINGS, L'This only affects gamepad bindings.');
+				text = ('%s\n\n%s'):format(CONFIRM_RESET_KEYBINDINGS, L'这只会影响游戏手柄的按键绑定。');
 				button1 = OKAY;
 				button2 = CANCEL;
 				timeout = 0;
@@ -38,10 +38,10 @@ function Device:OnClick()
 				OnHide = function()
 					if device:ConfigHasBluetoothHandling() then
 						CPAPI.Popup('ConsolePort_Apply_Config', {
-							text = L('Your %s device has separate handling for Bluetooth and wired connection.\nWhich one are you using?', device.Name);
-							button1 = L'Wired';
+							text = L('你的 %s 设备分别处理蓝牙连接和有线连接。\n你使用的是哪一种方式？', device.Name);
+							button1 = L'有线';
 							button2 = CANCEL;
-							button3 = L'Bluetooth';
+							button3 = L'蓝牙';
 							timeout = 0;
 							whileDead = 1;
 							showAlert = 1;

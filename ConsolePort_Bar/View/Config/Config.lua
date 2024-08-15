@@ -266,10 +266,10 @@ function Config:OnLoad()
 	env.SharedConfig.Env = ConsolePortConfig:GetEnvironment();
 	Mixin(Setting, env.SharedConfig.Env.SettingMixin) -- borrow code from the config for the settings
 
-	self.Name:SetText(L'Action Bar Configuration')
-	self.Mover:SetTooltipInfo(L'Move', L'Start moving the configuration window.')
+	self.Name:SetText(L'动作条配置')
+	self.Mover:SetTooltipInfo(L'移动', L'开始移动配置窗口。')
 	self.Mover:SetOnClickHandler(GenerateClosure(env.TriggerEvent, env, 'OnMoveFrame', self, nil, 10))
-	self.Main:SetTooltipInfo(L'Open Main Config', L'Open the main configuration window.')
+	self.Main:SetTooltipInfo(L'打开主配置', L'打开主配置窗口。')
 	self.Main:SetOnClickHandler(function()
 		self:Hide()
 		ConsolePort()

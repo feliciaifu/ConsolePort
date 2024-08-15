@@ -9,12 +9,12 @@ local FadeIn, FadeOut = db.Alpha.FadeIn, db.Alpha.FadeOut;
 local FADE_SPEED = 0.25;
 
 PowerLevel.Levels = CPAPI.Proxy({
-	{fill = 1, color = RED_FONT_COLOR,    atlas = 'ui-frame-bar-fill-red',    name = L'Critical', animation = 'Critical'};
-	{fill = 1, color = ORANGE_FONT_COLOR, atlas = 'ui-frame-bar-fill-yellow', name = L'Low'};
-	{fill = 2, color = YELLOW_FONT_COLOR, atlas = 'ui-frame-bar-fill-yellow', name = L'Medium'};
-	{fill = 3, color = GREEN_FONT_COLOR,  atlas = 'ui-frame-bar-fill-green',  name = L'High'};
-	{fill = 3, color = BLUE_FONT_COLOR,   atlas = 'ui-frame-bar-fill-blue',   name = L'Charging', animation = 'Charging'};
-	{fill = 0, color = WHITE_FONT_COLOR,  atlas = 'ui-frame-bar-fill-white',  name = L'Disconnected'};
+	{fill = 1, color = RED_FONT_COLOR,    atlas = 'ui-frame-bar-fill-red',    name = L'严重问题', animation = 'Critical'};
+	{fill = 1, color = ORANGE_FONT_COLOR, atlas = 'ui-frame-bar-fill-yellow', name = L'低电量'};
+	{fill = 2, color = YELLOW_FONT_COLOR, atlas = 'ui-frame-bar-fill-yellow', name = L'中电量'};
+	{fill = 3, color = GREEN_FONT_COLOR,  atlas = 'ui-frame-bar-fill-green',  name = L'高电量'};
+	{fill = 3, color = BLUE_FONT_COLOR,   atlas = 'ui-frame-bar-fill-blue',   name = L'充电中', animation = 'Charging'};
+	{fill = 0, color = WHITE_FONT_COLOR,  atlas = 'ui-frame-bar-fill-white',  name = L'已断开'};
 }, function() return
 	{fill = 3, color = WHITE_FONT_COLOR,  atlas = 'ui-frame-bar-fill-white',  name = UNKNOWN}
 end)
@@ -87,14 +87,14 @@ db:RegisterCallbacks(PowerLevel.OnDataLoaded, PowerLevel,
 -- Scripts
 ---------------------------------------------------------------
 function PowerLevel:OnEnter()
-	local header = L'Battery Level'
+	local header = L'电池电量'
 	local device = db('Gamepad/Active')
 	local desc = device and device:GetTooltipButtonPrompt('PADSYSTEM', header, 64) or header;
 	local info = self:GetPowerLevelInfo(db.Gamepad:GetPowerLevel())
 
 	GameTooltip_SetDefaultAnchor(GameTooltip, self)
 	GameTooltip:SetText(('%s: %s'):format(desc, info.color:WrapTextInColorCode(info.name)))
-	GameTooltip:AddLine('Hold Shift + Left Click to move.')
+	GameTooltip:AddLine('按住 Shift + 左键移动。')
 	GameTooltip:Show()
 end
 

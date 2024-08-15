@@ -27,7 +27,7 @@ env.Buttons = {}; _ = function(data) tinsert(env.Buttons, data) end;
 --[[ ConsolePort ]] do _{
 ---------------------------------------------------------------
 	img   = CPAPI.GetAsset([[Textures\Logo\CP]]);
-	hint  = 'Open Config';
+	hint  = '打开设置';
 	click = function() ConsolePort() end;
 	OnLoad = function(self)
 		local size = IsRetailVersion and 64 or 48;

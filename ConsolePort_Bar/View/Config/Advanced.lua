@@ -44,47 +44,47 @@ local Advanced = Mixin({
 	};
 	Headers = {
 		Condition = {
-			name   = 'Page Condition';
+			name   = '页面条件';
 			height = 50;
 			get    = function() return db('actionPageCondition'), db.Pager:GetDefaultPageCondition() end;
 			set    = function(value) db('Settings/actionPageCondition', Prune(value, db.Pager:GetDefaultPageCondition())) end;
 			text   = env.MakeMacroDriverDesc(
-				'Global condition of the action bar page. Accepts pairs of a macro condition and a page number, or a single page number.',
-				'Sends the resulting page to the response handler for post-processing.',
+				'动作条页面的全局条件。接受宏条件与页面编号的配对，或者单一的页面编号。',
+				'将生成的页面发送至响应处理器进行后续处理。',
 				'actionbar', 'page', true, env.Const.PageDescription, {
-					n = 'Page number to forward to the response handler.';
-					any = 'A simple value (number, string, boolean) to forward to the response handler where the real action page number is calculated.';
+					n = '转发给响应处理器的页面编号。';
+					any = '一个简单的值（数字、字符串、布尔值），用于转发给响应处理器，在该处计算实际的动作条页面编号。';
 				}, WHITE_FONT_COLOR);
 		};
 		Response = {
-			name   = 'Page Response';
+			name   = '页面处理';
 			height = 150;
 			get    = function() return db('actionPageResponse'), db.Pager:GetDefaultPageResponse() end;
 			set    = function(value) db('Settings/actionPageResponse', Prune(value, db.Pager:GetDefaultPageResponse())) end;
 			text   = env.MakeMacroDriverDesc(
-				'Global post-processing in Lua of the action bar page condition. This is shared across all action bars and systems. Restricted environment API only.',
-				'Sets the resulting page to the action headers, which in turn update the action buttons.',
+				'在Lua中对动作条页面条件进行全局后续处理。这是所有操作栏和系统共享的。仅限受限环境API使用。',
+				'将生成的页面设置到动作标题中，进而更新工作按键。',
 				nil, nil, nil, {
-					newstate = 'The resulting value from the condition handler.';
+					newstate = '来自条件处理器的结果值。';
 				}, {
-					newstate = 'The resulting page number to set on the action headers.';
+					newstate = '设置在动作标题中的预期页面编号。';
 				}, WHITE_FONT_COLOR);
 		};
 		Visibility = {
-			name   = 'Visibility Condition';
+			name   = '可见性条件';
 			height = 30;
 			get    = function() return env('Layout/visibility'), env.Const.ManagerVisibility end;
 			set    = function(value) env('Layout/visibility', value) end;
 			text   = env.MakeMacroDriverDesc(
-				'Global condition for the visibility of the action bar. This is shared across all action bars.',
-				'Sets the visibility of all action bar components based on the result of the condition.',
+				'全局动作条可见性条件。这是所有动作条共享的。',
+				'根据条件结果设置所有动作条组件的可见性。',
 				'actionbar', 'visibility', true, {
-					['vehicleui']   = 'Vehicle UI is active.';
-					['overridebar'] = 'An override bar is active, used when the specific scenario does not have a vehicle UI.';
-					['petbattle']   = 'Player is in a pet battle.';
+					['vehicleui']   = '载具界面激活。';
+					['overridebar'] = '一个覆盖栏被激活，当特定场景没有载具界面时使用。';
+					['petbattle']   = '玩家正在进行宠物战斗。';
 				}, {
-					['show'] = 'Show the action bar(s).';
-					['hide'] = 'Hide the action bar(s).';
+					['show'] = '显示动作条。';
+					['hide'] = '隐藏动作条。';
 				}, WHITE_FONT_COLOR);
 		};
 	};

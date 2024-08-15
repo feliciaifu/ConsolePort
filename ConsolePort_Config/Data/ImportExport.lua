@@ -19,26 +19,26 @@ local KEYS_PASTE = BLUE_FONT_COLOR:WrapTextInColorCode(CTRL_KEY_TEXT ..'+V');
 local KEYS_COPY_STRING = ('%s + %s'):format(KEYS_MARK, KEYS_COPY)
 local EXPORT_DATA_TEXT = L([[
 
-|cFFFFFF00Export|r
+|cFFFFFF00导出配置|r
 
-Select which data you want to export. A string will be generated below, which you can then paste into another client, or share with others.
+选择你想要导出的配置数据。下方将生成一个字符串，你可以将此字符串粘贴到另一个客户端，或与他人分享。
 
-Use %s to copy the string.
+使用 %s 来复制该字符串。
 ]], KEYS_COPY_STRING)
 
 local IMPORT_DATA_TEXT = L([[
 
-|cFFFFFF00Import|r
+|cFFFFFF00导入配置|r
 
-Paste an exported string below, then load and select the data you want to import. Imported data will overwrite your current data when applicable.
+将导出的字符串粘贴在下方，然后加载并选择您要导入的配置数据。导入的配置数据将在适用的情况下覆盖当前配置数据。
 
-Use %s to copy the string from the source, and %s to paste the string below.
+使用 %s 从源复制字符串，并使用 %s 将字符串粘贴在下方。
 ]], KEYS_COPY_STRING, KEYS_PASTE)
 local IMPORT_FAILED_TEXT = L([[
 
-|cFFFFFF00Import|r
+|cFFFFFF00导入配置|r
 
-Import failed:]])
+导入失败：]])
 
 local PFX = '^ConsolePort'; -- alias path pattern prefix
 
@@ -61,14 +61,13 @@ local AliasMap = {
 	path = {
 		[PFX..'Bindings$'] = KEY_BINDINGS_MAC;
 		[PFX..'Settings$'] = INTERFACE_OPTIONS;
-		[PFX..'Utility$'] = L'Rings';
-		[PFX..'Configs$'] = L'Device Mappings';
-		[PFX..'Cvars$'] = L'Device Settings';
-		[PFX..'Devices$'] = L'Device Profiles';
-		[PFX..'_BarLayout$'] = L'Action Bar Setup';
-		[PFX..'_BarPresets$'] = L'Action Bar Presets';
-		[PFX..'_BarLoadout$'] = L'Action Bar Loadout';
-		[PFX..'_BarSetup$'] = L'Action Bar Loadout (Deprecated)';
+		[PFX..'Utility$'] = L'法环';
+		[PFX..'Configs$'] = L'设备映射';
+		[PFX..'Cvars$'] = L'设备设置';
+		[PFX..'Devices$'] = L'设备配置文件';
+		[PFX..'_BarLayout$'] = L'动作条设置';
+		[PFX..'_BarPresets$'] = L'动作条预设';
+		[PFX..'_BarLoadout$'] = L'动作条加载';
 		[PFX..'_Talents$'] = TALENTS;
 		[PFX..'Bindings/(%u+%d?)/(.*)$'] = function(button, mod)
 			return ConsolePort:GetFormattedButtonCombination(button, mod)
@@ -101,7 +100,7 @@ local AliasMap = {
 			return db.Utility:GetBindingDisplayNameForSet(setID)
 		end;
 		[PFX..'Utility/%w+/(%d+)$'] = function(buttonID)
-			return L('Button |cFF00FFFF%s|r', buttonID)
+			return L('按键 |cFF00FFFF%s|r', buttonID)
 		end;
 	};
 	value = {
@@ -137,7 +136,7 @@ local AliasMapExport = db.table.merge({
 				return ('|cFF00FFFF%s|r: %s'):format(buttonID,
 					env.BindingInfo:GetActionInfo(actionID) or ('|cFF757575%s|r'):format(NONE))
 			end
-			return L('Page |cFF00FFFF%s|r', pageID)
+			return L('页 |cFF00FFFF%s|r', pageID)
 		end;
 	}
 }, AliasMap)
@@ -471,7 +470,7 @@ function ImportButton:OnClick()
 		maxLetters = 0;
 		button1 = APPLY;
 		button2 = CANCEL;
-		button3 = L'Load';
+		button3 = L'载入';
 		noCloseOnAlt = true;
 		EditBoxOnEscapePressed = function(self) self:GetParent():Hide() end;
 		EditBoxOnTextChanged = function(self)

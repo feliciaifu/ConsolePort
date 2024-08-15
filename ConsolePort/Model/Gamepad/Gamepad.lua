@@ -47,7 +47,7 @@ function GamepadAPI:AddGamepad(data, mergeDefault)
 end
 
 function GamepadAPI:CreateGamepadFromPreset(name, preset)
-	assert(self.Devices[preset], 'Preset ID does not exist in registry.')
+	assert(self.Devices[preset], '注册表中不存在预设 ID。')
 	-- TODO: allow copies of presets
 end
 
@@ -64,7 +64,7 @@ function GamepadAPI:EnumerateDevices()
 end
 
 function GamepadAPI:SetActiveDevice(name)
-	assert(self.Devices[name], ('Device %s does not exist in registry.'):format(name or '<nil>'))
+	assert(self.Devices[name], ('注册表中不存在设备 %s。'):format(name or '<nil>'))
 	for device, data in pairs(self.Devices) do
 		data.Active = nil;
 	end
@@ -130,7 +130,7 @@ function GamepadAPI:PLAYER_ENTERING_WORLD()
 end
 
 function GamepadAPI:GAME_PAD_CONFIGS_CHANGED()
-	CPAPI.Log('Your gamepad configuration has changed.')
+	CPAPI.Log('你的游戏手柄配置已更改。')
 end
 
 function GamepadAPI:GAME_PAD_POWER_CHANGED(level)
@@ -461,7 +461,7 @@ function GamepadMixin:Activate()
 end
 
 function GamepadMixin:ApplyPresetVars()
-	assert(self.Preset.Variables, ('Console variables missing from %s template.'):format(self.Name))
+	assert(self.Preset.Variables, ('%s 模板中缺少控制台变量。'):format(self.Name))
 	for var, val in pairs(self.Preset.Variables) do
 		db:SetCVar(var, val)
 	end
@@ -483,7 +483,7 @@ function GamepadMixin:ConfigHasBluetoothHandling()
 end
 
 function GamepadMixin:ApplyConfig(bluetooth)
-	assert(self.Config, ('Raw configuration missing from %s template.'):format(self.Name))
+	assert(self.Config, ('%s 模板中缺少原始配置。'):format(self.Name))
 	local config = CopyTable(self.Config);
 	-- NOTE: Handle bluetooth differences if supplied
 	if (bluetooth ~= nil) then
@@ -508,7 +508,7 @@ function GamepadMixin:ApplyConfig(bluetooth)
 end
 
 function GamepadMixin:ApplyPresetBindings(setID)
-	assert(self.Preset.Bindings, ('Preset bindings missing from %s template.'):format(self.Name))
+	assert(self.Preset.Bindings, ('%s 模板中缺少预设按键绑定。'):format(self.Name))
 	local clearOverlap, map = not db('bindingOverlapEnable'), db.table.map;
 
 	for btn, set in pairs(self.Preset.Bindings) do
@@ -526,7 +526,7 @@ end
 
 function GamepadMixin:ApplyHotkeyStrings()
 	local label, hotkey = self.Theme.Label;
-	assert(label, ('Gamepad device %s does not have a button label type.'):format(self.Name))
+	assert(label, ('游戏手柄设备 %s 没有按键标签类型。'):format(self.Name))
 	for button in pairs(self.Theme.Icons) do
 		hotkey = self:GetHotkeyStringForButton(button)
 		_G[('KEY_ABBR_%s'):format(button)] = hotkey;
@@ -547,7 +547,7 @@ function GamepadMixin:GetIconAtlasForButton(button, style)
 end
 
 function GamepadMixin:GetIconIDForButton(button)
-	assert(button, 'Button is not defined.')
+	assert(button, '按键未定义。')
 	return self.Theme.Icons[button]
 end
 

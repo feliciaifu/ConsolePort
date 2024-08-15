@@ -139,9 +139,9 @@ ConsolePort:AddVariables({
 	useGlobalLootTooltip = {db.Data.Bool(false);
 		head = ACCESSIBILITY_LABEL;
 		sort = 3;
-		name = 'Use Global Loot Tooltip';
-		desc = 'Use global game tooltip for loot information, allowing other addons to add information to lootable items.';
-		note = 'Requires ConsolePort World.';
+		name = '使用全局战利品提示';
+		desc = '为战利品信息使用全局游戏提示，允许其他插件为战利品添加信息。';
+		note = '需要 ConsolePort World 模块。';
 		advd = true;
 	};
 })
