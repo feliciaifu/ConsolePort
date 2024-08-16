@@ -21,6 +21,7 @@
 				</Attributes>
 			</Button>
 			<Button name="$parentToggle" parentKey="Toggle" inherits="SecureActionButtonTemplate" registerForClicks="LeftButtonDown" setAllPoints="true" alpha="0"/>
+			<Button name="$parentToggle1" parentKey="Toggle1" inherits="SecureActionButtonTemplate" registerForClicks="LeftButtonDown" setAllPoints="true" alpha="0"/>
 			<!-- Frontend -->
 			<Frame parentKey="Display" inherits="CPCursorArrowTemplate" frameStrata="TOOLTIP">
 				<Frames>

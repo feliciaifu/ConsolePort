@@ -39,7 +39,29 @@ Cursor:WrapScript(Cursor.Toggle, 'PreClick', [[
 	end
 	
 ]])
-
+Cursor:WrapScript(Cursor.Toggle1, 'PreClick', [[
+	if button == 'ON' then
+		if enabled then return end;
+		control:RunAttribute('ToggleCursor', true)
+	elseif button == 'OFF' then
+		if not enabled then return end;
+		control:RunAttribute('ToggleCursor', false)
+	else
+		control:RunAttribute('ToggleCursor', not enabled)
+	end
+	if control:GetAttribute('usefocus') then
+		self:SetAttribute('type', 'focus')
+		if enabled then
+			self:SetAttribute('unit', control:GetAttribute('cursorunit'))
+		else
+			self:SetAttribute('unit', 'none')
+		end
+	else
+		self:SetAttribute('type', nil)
+		self:SetAttribute('unit', nil)
+	end
+	
+]])
 Cursor:Wrap('PreClick', [[
 	self::UpdateNodes()
 	self::SelectNewNode(button)
@@ -229,20 +251,23 @@ Cursor:CreateEnvironment({
 	]];
 	ToggleCursor = [[
 		enabled = ...;
-
+		local display=self:GetFrameRef('Display');
 		if enabled then
 			self::SetBaseBindings(self:GetAttribute('navmodifier'))
 			self::UpdateNodes()
 			self::RefreshOwners()
 			self::SelectNewNode(0)
 			self:Show()
+			display:Show();
 		else
-			self::ClearFocusUnit()
+			--self::ClearFocusUnit()
 			self::PrepareReroute()
 			self:SetAttribute('node', nil)
 			self:SetAttribute('cursorunit', nil)
 			self:ClearBindings()
+			
 			self:Hide()
+			
 		end
 	]];
 	-- State handlers:
@@ -283,6 +308,39 @@ Cursor:CreateEnvironment({
 			return condition and condition:match('harm')
 		end
 	]];
+	SetNodeByKey = [[
+		local key = ...
+		--处理操作
+		if key=='PAD1' then 
+			--取消团队游标
+			self:RunAttribute('ToggleCursor', false);
+			return;
+		end
+		if curnode and (key ~= 0) then
+			local tX, tY = self::GetCenter(curnode:GetRect())
+			local cX, cY = math.huge, math.huge
+			local currentNodeChanged = false
+			for node in pairs(NODES) do
+				
+				if node:IsVisible() and node:GetName()~='PlayerFrame' and node:GetName()~='FocusFrame' then
+					local nX, nY = self::GetCenter(node:GetRect())
+					local dX, dY, dist = self::AbsXY(tX, nX, tY, nY)
+
+					if ( dist < cX + cY ) then
+						if self:RunAttribute(key, tX, tY, nX, nY, dX, dY) then
+							curnode, cX, cY = node, dX, dY;
+							currentNodeChanged = true
+						end
+					end
+				end
+			end
+
+			local wrapDisable = self:GetAttribute('wrapDisable')
+			if not currentNodeChanged and not wrapDisable then
+				self::SetWrapAroundNode(key, tX, tY)
+			end
+		end
+	]];
 })
 
 -- Attempt to move the cursor to another unit frame when the current unit expires.
@@ -307,27 +365,22 @@ Cursor.Directions = {
 	PADDLEFT  = 'raidCursorLeft';
 	PADDRIGHT = 'raidCursorRight';
 };
+Cursor.Operators={
+	PAD2='raidCursorConfirm';
+	PAD1='raidCursorCancel';
+	PAD3='raidCursorOperate';
+}
 --Raid游标黑名单
 Cursor.FrameBlackList={
 	'PlayerFrame'
 }
-local IsInBlackList=function ( frameName )
-	-- body
-	for frame in pairs(Cursor.FrameBlackList) do
-		if frameName== frame then
-			return true;
-		end
-	end
-	return false;
-end
-	
+--游标是否激活
+Cursor.cursorIsShow=false;
 
-Cursor:SetAttribute('IsInBlackList',IsInBlackList)
 function Cursor:OnDataLoaded()
 	local modifier = db('raidCursorModifier')
 	modifier = modifier:match('<none>') and '' or modifier..'-';
 	self:SetAttribute('navmodifier', modifier)
-
 	local mode = db('raidCursorMode')
 	self:SetAttribute('useroute', mode ~= self.Modes.Target)
 	self:SetAttribute('usefocus', mode == self.Modes.Focus)
@@ -342,9 +395,13 @@ function Cursor:OnDataLoaded()
 	for direction, varID in pairs(self.Directions) do
 		self:Execute(('BUTTONS[%q] = %q'):format(direction, db(varID)))
 	end
+	for operator, varID in pairs(self.Operators) do
+		self:Execute(('BUTTONS[%q] = %q'):format(operator, db(varID)))
+	end
 
 	self:RegisterEvent('ADDON_LOADED')
 	self.ADDON_LOADED = self.GROUP_ROSTER_UPDATE;
+	Cursor:SetFrameRef('Display', Cursor.Display);
 end
 
 function Cursor:OnUpdateOverrides(isPriority)
@@ -364,7 +421,10 @@ db:RegisterSafeCallbacks(Cursor.OnDataLoaded, Cursor,
 	'Settings/raidCursorDown',
 	'Settings/raidCursorLeft',
 	'Settings/raidCursorRight',
-	'Settings/raidCursorWrapDisable'
+	'Settings/raidCursorWrapDisable',
+	'Settings/raidCursorConfirm',
+	'Settings/raidCursorCancel',
+	'Settings/raidCursorOperate'
 );
 db:RegisterSafeCallback('OnUpdateOverrides', Cursor.OnUpdateOverrides, Cursor)
 
@@ -374,11 +434,13 @@ db:RegisterSafeCallback('OnUpdateOverrides', Cursor.OnUpdateOverrides, Cursor)
 function Cursor:OnHide()
 	for _, event in ipairs(self.PlayerEvents) do self:UnregisterEvent(event) end
 	for _, event in ipairs(self.ActiveEvents) do self:UnregisterEvent(event) end
+	Cursor.Display:Hide();
 end
 
 function Cursor:OnShow()
 	for _, event in ipairs(self.PlayerEvents) do self:RegisterUnitEvent(event, 'player') end
 	for _, event in ipairs(self.ActiveEvents) do self:RegisterEvent(event) end
+	
 end
 
 function Cursor:OnAttributeChanged(attribute, value)
@@ -438,7 +500,6 @@ Mixin(CPAPI.EventHandler(Cursor, {
 ---------------------------------------------------------------
 local Fade, Flash = db.Alpha.Fader, db.Alpha.Flash;
 local PORTRAIT_TEXTURE_SIZE = 46;
-
 do 	local IsSpellHarmful, IsSpellHelpful = CPAPI.IsSpellHarmful, CPAPI.IsSpellHelpful;
 	local UnitClass, UnitHealth, UnitHealthMax = UnitClass, UnitHealth, UnitHealthMax;
 	local GetClassColorObj, PlaySound, SOUNDKIT = GetClassColorObj, PlaySound, SOUNDKIT;
@@ -643,7 +704,7 @@ function Cursor:AddFrame(frame)
 	]])
 end
 
-Cursor.CachedFrames = {[Cursor] = true; [Cursor.Toggle] = true};
+Cursor.CachedFrames = {[Cursor] = true; [Cursor.Toggle] = true;[Cursor.Toggle1] = true;};
 function Cursor:CacheNode(node)
 	if not self.CachedFrames[node] then
 		self.CachedFrames[node] = true;

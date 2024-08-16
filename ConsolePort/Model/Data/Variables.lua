@@ -311,6 +311,21 @@ db:Register('Variables', CPAPI.Callable({
 		note = '数值越高速度越慢。';
 		advd = true;
 	};
+	raidCursorConfirm = _{Button('PAD2', true);
+		name = '确认键';
+		desc = '将当前目标设置为当前节点';
+		advd = true;
+	};
+	raidCursorCancel = _{Button('PAD1', true);
+		name = '取消键';
+		desc = '取消团队光标';
+		advd = true;
+	};
+	raidCursorOperate = _{Button('PAD3', true);
+		name = '次级指令';
+		desc = '在当前节点上模拟右键点击，触发右键菜单';
+		advd = true;
+	};
 	--------------------------------------------------------------------------------------------------------
 	_'界面光标';
 	--------------------------------------------------------------------------------------------------------

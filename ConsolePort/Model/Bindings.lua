@@ -16,7 +16,7 @@ do local function click(id, btn) return ('CLICK %s%s:%s'):format(_, id, btn or '
 		RaidCursorFocus   = click 'RaidCursorFocus';
 		RaidCursorTarget  = click 'RaidCursorTarget';
 		RaidCursorToggle  = click 'RaidCursorToggle';
-		RaidCursorCancel  = click 'RaidCursorCancel';
+		RaidCursorToggle1  = click 'RaidCursorToggle1';
 		UICursorToggle    = click 'Cursor';
 		UtilityRing       = click 'UtilityToggle';
 		MenuRing          = click 'MenuTrigger';
@@ -52,7 +52,25 @@ do local function hold(binding) return ('%s（长按）'):format(binding) end;
 			};
 		};
 		{	binding = Bindings.Custom.RaidCursorToggle;
-			name    = '切换团队光标';
+			name    = '切换团队光标，绑定1';
+			desc    = [[
+				激活一个光标，锁定在你的小队/团队框架上，允许你在保持对敌对目标锁定的同时，治疗另一名友善目标。
+
+				团队光标也可以设置为直接目标选择，移动光标将切换你当前的目标。
+
+				在使用时，团队光标占用一组方向键组合来控制光标位置。按下团队光标所绑定的取消键将关闭团队光标。
+
+				在路径选择模式下，光标不会响应重定向宏或模糊目标的技能，比如牧师的苦修。
+				查看目标单位框架，获取更多不同的选择。
+			]];
+			image = {
+				file  = CPAPI.GetAsset([[Tutorial\RaidCursor]]);
+				width = 256;
+				height = 256;
+			};
+		};
+		{	binding = Bindings.Custom.RaidCursorToggle1;
+			name    = '切换团队光标，绑定2';
 			desc    = [[
 				激活一个光标，锁定在你的小队/团队框架上，允许你在保持对敌对目标锁定的同时，治疗另一名友善目标。
 
@@ -74,17 +92,6 @@ do local function hold(binding) return ('%s（长按）'):format(binding) end;
 		};
 		{	binding = Bindings.Custom.RaidCursorTarget;
 			name    = '目标团队光标';
-		};
-		{	binding = Bindings.Custom.RaidCursorCancel;
-			name    = '取消团队光标';
-			desc    = [[
-				按下取消团队光标。
-			]];
-			image = {
-				file  = CPAPI.GetAsset([[Tutorial\RaidCursor]]);
-				width = 256;
-				height = 256;
-			};
 		};
 		--[[{	name    = hold(FOCUS_CAST_KEY_TEXT);
 			binding = Bindings.Custom.FocusButton;
@@ -434,9 +441,9 @@ do local function custom(id) return ([[Interface\AddOns\ConsolePort_Bar\Assets\T
 		---------------------------------------------------------------
 		[Bindings.Custom.EasyMotion]       = CustomIcons.Group;
 		[Bindings.Custom.RaidCursorToggle] = CustomIcons.Group;
+		[Bindings.Custom.RaidCursorToggle1] = CustomIcons.Group;
 		[Bindings.Custom.RaidCursorFocus]  = CustomIcons.Group;
 		[Bindings.Custom.RaidCursorTarget] = CustomIcons.Group;
-		[Bindings.Custom.RaidCursorCancel]= CustomIcons.Group;
 		[Bindings.Custom.UtilityRing]      = CustomIcons.Ring;
 		[Bindings.Custom.MenuRing]         = CustomIcons.Menu;
 		--[Bindings.Custom.FocusButton]    = client 'VAS_RaceChange';
