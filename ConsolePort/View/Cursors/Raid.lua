@@ -327,7 +327,7 @@ Cursor:CreateEnvironment({
 			local cX, cY = math.huge, math.huge
 			local currentNodeChanged = false
 			for node in pairs(NODES) do
-				
+				--
 				if node:IsVisible() and node:GetName()~='PlayerFrame' and node:GetName()~='FocusFrame' then
 					local nX, nY = self::GetCenter(node:GetRect())
 					local dX, dY, dist = self::AbsXY(tX, nX, tY, nY)

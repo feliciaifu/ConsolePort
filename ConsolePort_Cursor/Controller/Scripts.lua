@@ -7,14 +7,25 @@
 -- directly or indirectly by execution path.
 
 local _, env, L = ...; L = env.db.Locale; _ = CPAPI.OnAddonLoaded;
-local Execute, Scripts = ExecuteFrameScript, CPAPI.Proxy({}, function(self, key) return rawget(rawset(self, key, {}), key) end);
+local xpcall, CallErrorHandler = xpcall, CallErrorHandler;
+local Scripts = CPAPI.Proxy({}, function(self, key) return rawget(rawset(self, key, {}), key) end);
+
+local function ExecuteFrameScript(frame, scriptName, ...)
+	local pre, main, post =
+		frame:GetScript(scriptName, LE_SCRIPT_BINDING_TYPE_INTRINSIC_PRECALL),
+		frame:GetScript(scriptName, LE_SCRIPT_BINDING_TYPE_EXTRINSIC),
+		frame:GetScript(scriptName, LE_SCRIPT_BINDING_TYPE_INTRINSIC_POSTCALL);
+	if pre  then xpcall(pre,  CallErrorHandler, frame, ...) end;
+	if main then xpcall(main, CallErrorHandler, frame, ...) end;
+	if post then xpcall(post, CallErrorHandler, frame, ...) end;
+end
 
 function env.ExecuteScript(node, scriptType, ...)
 	local script, ok, err = Scripts[scriptType][node:GetScript(scriptType)];
 	if script then
 		ok, err = pcall(script, node, ...)
 	else
-		ok, err = pcall(Execute, node, scriptType, ...)
+		ok, err = pcall(ExecuteFrameScript, node, scriptType, ...)
 	end
 	if not ok then
 		CPAPI.Log('Script execution failed in %s handler:\n%s', scriptType, err)
@@ -80,7 +91,7 @@ do
 			end
 		end)
 	-----------------------------------------------------------
-		_('Blizzard_ClassTalentUI', function()
+		_('Blizzard_PlayerSpells', function()
 	-----------------------------------------------------------
 			-- Talent frame customization:
 			-- Remove action bar highlights from talent buttons, since they taint the action bar controller.
@@ -88,7 +99,7 @@ do
 			-- instead of on mouseover. Finally, hook the spell menu to remove focus from the talent frame so that
 			-- pickups and bar placements from the talent frame can go smoothly.
 
-			local selectionChoiceFrame = ClassTalentFrame.TalentsTab.SelectionChoiceFrame;
+			local selectionChoiceFrame = PlayerSpellsFrame.TalentsFrame.SelectionChoiceFrame;
 			local currentBaseButton;
 
 			Scripts.OnEnter[ ClassTalentButtonSpendMixin.OnEnter ] = function(self)
@@ -112,7 +123,7 @@ do
 				currentBaseButton = self;
 
 				GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
-				local selectTalentText = L'选择天赋';
+				local selectTalentText = L'Select talent';
 				local spellID = self:GetSpellID()
 				if spellID then
 					GameTooltip:SetSpellByID(spellID)
@@ -134,15 +145,15 @@ do
 			end)
 
 			ConsolePortSpellMenu:HookScript('OnShow', function()
-				if ClassTalentFrame:IsShown() then
-					ClassTalentFrame:SetAlpha(0.25)
-					ClassTalentFrame:SetAttribute(env.Attributes.IgnoreNode, true)
+				if PlayerSpellsFrame:IsShown() then
+					PlayerSpellsFrame:SetAlpha(0.25)
+					PlayerSpellsFrame:SetAttribute(env.Attributes.IgnoreNode, true)
 				end
 			end)
 			ConsolePortSpellMenu:HookScript('OnHide', function()
-				if ClassTalentFrame:GetAttribute(env.Attributes.IgnoreNode) then
-					ClassTalentFrame:SetAlpha(1)
-					ClassTalentFrame:SetAttribute(env.Attributes.IgnoreNode, nil)
+				if PlayerSpellsFrame:GetAttribute(env.Attributes.IgnoreNode) then
+					PlayerSpellsFrame:SetAlpha(1)
+					PlayerSpellsFrame:SetAttribute(env.Attributes.IgnoreNode, nil)
 				end
 			end)
 		end)
@@ -161,13 +172,12 @@ do
 	end
 	if CPAPI.IsRetailVersion then
 	-----------------------------------------------------------
-		_('Blizzard_ClassTalentUI', function()
+		_('Blizzard_PlayerSpells', function()
 	-----------------------------------------------------------
 			-- Talent frame customization:
 			-- Remove clearing of action bar highlights from talent buttons, since they taint the action bar controller.
 			-- When leaving a split choice talent popup, hide the popup if the cursor is not over a nested selection button.
-
-			local selectionChoiceFrame = ClassTalentFrame.TalentsTab.SelectionChoiceFrame;
+			local selectionChoiceFrame = PlayerSpellsFrame.TalentsFrame.SelectionChoiceFrame;
 
 			Scripts.OnLeave[ ClassTalentButtonSpendMixin.OnLeave ] = function(self)
 				selectionChoiceFrame:Hide()
