@@ -268,7 +268,7 @@ function GetScrollButtons(node)
 end
 
 ---------------------------------------------------------------
--- Recursive scanner
+-- Recursive scanner递归扫描子节点
 ---------------------------------------------------------------
 function Scan(super, node, sibling, ...)
 	if IsRelevant(node) then
@@ -277,6 +277,7 @@ function Scan(super, node, sibling, ...)
 			if IsInteractive(node, object) then
 				CacheItem(node, object, super, level)
 			elseif IsMouseEnabled(node) then
+				--只能点击
 				CacheRect(node, level)
 			end
 		end
@@ -648,3 +649,5 @@ NODE.NavigateToBestCandidate = NavigateToBestCandidate;
 NODE.NavigateToBestCandidateV2 = NavigateToBestCandidateV2;
 NODE.NavigateToClosestCandidate = NavigateToClosestCandidate;
 NODE.NavigateToArbitraryCandidate = NavigateToArbitraryCandidate;
+NODE.CACHE=CACHE;
+NODE.RECTS=RECTS;

@@ -130,6 +130,13 @@ env.StandaloneFrameStack = {
 	'SplashFrame';
 	'StackSplitFrame';
 	'UIWidgetCenterDisplayFrame';
+	'FloatingChatFrame';
+	'ScrollingMessageFrame';
+	'BuffFrame';
+	'Blizzard_ObjectiveTrackerContainer';
+	'CompactRaidFrameManager';
+	'PartyFrame';
+	'ObjectiveTrackerFrame';
 };
 for i=1, (NUM_CONTAINER_FRAMES   or 13) do tinsert(env.StandaloneFrameStack, 'ContainerFrame'..i) end
 for i=1, (NUM_GROUP_LOOT_FRAMES  or 4)  do tinsert(env.StandaloneFrameStack, 'GroupLootFrame'..i) end

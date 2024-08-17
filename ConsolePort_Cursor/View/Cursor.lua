@@ -19,9 +19,10 @@ local Cursor, Node, Input, Stack, Scroll, Fade, Hooks =
 	ConsolePortUIScrollHandler,
 	db.Alpha.Fader, db.Hooks;
 
-db:Register('Cursor', Cursor, true); env.Cursor = Cursor;
+db:Register('Cursor', Cursor, true); 
+env.Cursor = Cursor;
 Cursor.InCombat = InCombatLockdown;
-
+Cursor.Node=Node;
 ---------------------------------------------------------------
 -- Events
 ---------------------------------------------------------------
@@ -154,6 +155,7 @@ function Cursor:ShowAfterCombat(enabled)
 end
 
 function Cursor:ScanUI()
+	
 	if db('UIaccessUnlimited') then
 		Node(unpack(env.UnlimitedFrameStack))
 	else
@@ -300,6 +302,8 @@ do  -- Create input proxy for basic controls
 	function Cursor:SetBasicControls()
 		local controls = self:GetBasicControls()
 		for button, settings in pairs(controls) do
+			print(button)
+			print(settings)
 			Input:SetCommand(button, self, true, 'LeftButton', 'UIControl', unpack(settings));
 		end
 	end

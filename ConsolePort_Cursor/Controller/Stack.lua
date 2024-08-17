@@ -39,7 +39,7 @@ do local frames, visible, buffer, hooks, forbidden, obstructors = {}, {}, {}, {}
 	local function updateBuffer(self, flag)
 		buffer[self] = flag;
 	end
-
+	--更新buff？
 	local function updateOnBuffer(self)
 		updateBuffer(self, true)
 		After(0, function()
