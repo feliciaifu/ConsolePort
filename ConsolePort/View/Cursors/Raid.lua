@@ -315,6 +315,12 @@ Cursor:CreateEnvironment({
 			--取消团队游标
 			self:RunAttribute('ToggleCursor', false);
 			return;
+		elseif key=='PAD2' then 
+			return;
+		elseif key=='PAD3' then 
+			--处理右键菜单
+
+			return;
 		end
 		if curnode and (key ~= 0) then
 			local tX, tY = self::GetCenter(curnode:GetRect())
@@ -377,6 +383,9 @@ Cursor.FrameBlackList={
 --游标是否激活
 Cursor.cursorIsShow=false;
 
+function Cursor.Display:CommonCursor_SetEnabled(enable)
+	ConsolePortCursor:SetEnabled(enable);
+end
 function Cursor:OnDataLoaded()
 	local modifier = db('raidCursorModifier')
 	modifier = modifier:match('<none>') and '' or modifier..'-';
@@ -402,6 +411,8 @@ function Cursor:OnDataLoaded()
 	self:RegisterEvent('ADDON_LOADED')
 	self.ADDON_LOADED = self.GROUP_ROSTER_UPDATE;
 	Cursor:SetFrameRef('Display', Cursor.Display);
+
+	--
 end
 
 function Cursor:OnUpdateOverrides(isPriority)
