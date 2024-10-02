@@ -308,45 +308,6 @@ Cursor:CreateEnvironment({
 			return condition and condition:match('harm')
 		end
 	]];
-	SetNodeByKey = [[
-		local key = ...
-		--处理操作
-		if key=='PAD1' then 
-			--取消团队游标
-			self:RunAttribute('ToggleCursor', false);
-			return;
-		elseif key=='PAD2' then 
-			return;
-		elseif key=='PAD3' then 
-			--处理右键菜单
-
-			return;
-		end
-		if curnode and (key ~= 0) then
-			local tX, tY = self::GetCenter(curnode:GetRect())
-			local cX, cY = math.huge, math.huge
-			local currentNodeChanged = false
-			for node in pairs(NODES) do
-				--
-				if node:IsVisible() and node:GetName()~='PlayerFrame' and node:GetName()~='FocusFrame' then
-					local nX, nY = self::GetCenter(node:GetRect())
-					local dX, dY, dist = self::AbsXY(tX, nX, tY, nY)
-
-					if ( dist < cX + cY ) then
-						if self:RunAttribute(key, tX, tY, nX, nY, dX, dY) then
-							curnode, cX, cY = node, dX, dY;
-							currentNodeChanged = true
-						end
-					end
-				end
-			end
-
-			local wrapDisable = self:GetAttribute('wrapDisable')
-			if not currentNodeChanged and not wrapDisable then
-				self::SetWrapAroundNode(key, tX, tY)
-			end
-		end
-	]];
 })
 
 -- Attempt to move the cursor to another unit frame when the current unit expires.

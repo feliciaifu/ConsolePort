@@ -158,7 +158,6 @@ db:Register('Securenav', setmetatable(CreateFromMixins(CPAPI.SecureEnvironmentMi
 	-----------------------------------------------------------
 	SetNodeByKey = [[
 		local key = ...
-		print('s')
 		if curnode and (key ~= 0) then
 			local tX, tY = self::GetCenter(curnode:GetRect())
 			local cX, cY = math.huge, math.huge

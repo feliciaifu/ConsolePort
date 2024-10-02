@@ -201,6 +201,7 @@ local function nopt() return {} end;
 -- Namespace wrappers
 CPAPI.ContainerIDToInventoryID       = C_Container     and C_Container.ContainerIDToInventoryID          or ContainerIDToInventoryID;
 CPAPI.EnableAddOn                    = C_AddOns        and C_AddOns.EnableAddOn                          or EnableAddOn;
+CPAPI.DisableAddOn                   = C_AddOns        and C_AddOns.DisableAddOn                         or DisableAddOn;
 CPAPI.GetActiveZoneAbilities         = C_ZoneAbility   and C_ZoneAbility.GetActiveAbilities              or nopt;
 CPAPI.GetAddOnInfo                   = C_AddOns        and C_AddOns.GetAddOnInfo                         or GetAddOnInfo;
 CPAPI.GetBonusBarIndexForSlot        = C_ActionBar     and C_ActionBar.GetBonusBarIndexForSlot           or nop;

@@ -302,8 +302,6 @@ do  -- Create input proxy for basic controls
 	function Cursor:SetBasicControls()
 		local controls = self:GetBasicControls()
 		for button, settings in pairs(controls) do
-			print(button)
-			print(settings)
 			Input:SetCommand(button, self, true, 'LeftButton', 'UIControl', unpack(settings));
 		end
 	end
