@@ -232,7 +232,6 @@ Cursor:CreateEnvironment({
 
 		if unit then
 			self:Show()
-
 			Focus:SetAttribute('unit', unit)
 			Target:SetAttribute('unit', unit)
 			RegisterStateDriver(self, 'unitexists', ('[@%s,exists] true; nil'):format(unit))

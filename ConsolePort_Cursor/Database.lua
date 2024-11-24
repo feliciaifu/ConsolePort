@@ -132,7 +132,6 @@ env.StandaloneFrameStack = {
 	'UIWidgetCenterDisplayFrame';
 	'FloatingChatFrame';
 	'ScrollingMessageFrame';
-	'BuffFrame';
 	'Blizzard_ObjectiveTrackerContainer';
 	'CompactRaidFrameManager';
 	'PartyFrame';
