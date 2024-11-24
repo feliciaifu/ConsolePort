@@ -32,6 +32,13 @@ ConsolePort:AddVariables({
 		deps = DEPENDENCY;
 		advd = true;
 	};
+	UIalgoOptimize = _{Data.Bool(true);
+		name = 'Optimize Algorithm';
+		desc = 'Use optimized pathfinding algorithm for cursor movement.';
+		note = 'Disabling this may cause worse performance with many panels open.';
+		deps = DEPENDENCY;
+		advd = true;
+	};
 	UIshowOnDemand = _{Data.Bool(false);
 		name = '需求模式';
 		desc = '光标按需出现，而不是在面板出现时响应出现。';

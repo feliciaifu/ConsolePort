@@ -200,7 +200,7 @@ function BindingInfo:ConvertTextToBonusBar(text, page, actionID)
 		for i=1, GetNumShapeshiftForms() do
 			local _, isActive, _, spellID = GetShapeshiftFormInfo(i)
 			if isActive and spellID then
-				return ('%s (%s)'):format(text, GetSpellInfo(spellID))
+				return ('%s (%s)'):format(text, CPAPI.GetSpellInfo(spellID).name)
 			end
 		end
 	end
@@ -300,6 +300,7 @@ function BindingInfo:RefreshCollections()
 	local SKILLTYPE_PET    = not CPAPI.IsRetailVersion and 'PETACTION'    or Enum.SpellBookItemType.Pet;
 	local SKILLTYPE_SPELL  = not CPAPI.IsRetailVersion and 'SPELL'        or Enum.SpellBookItemType.Spell;
 	local SKILLTYPE_FLYOUT = not CPAPI.IsRetailVersion and 'FLYOUT'       or Enum.SpellBookItemType.Flyout;
+
 	-- Spells
 	do  local spellBook, flyout, flyoutName = {}, {};
 
