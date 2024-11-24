@@ -164,7 +164,7 @@ db:Register('Securenav', setmetatable(CreateFromMixins(CPAPI.SecureEnvironmentMi
 			local currentNodeChanged = false
 			for node in pairs(NODES) do
 				
-				if node:IsVisible() and node:GetName()~='PlayerFrame' and node:GetName()~='FocusFrame' then
+				if node:IsVisible() and node:GetName()~='PlayerFrame' and node:GetName()~='FocusFrame' and string.find(node:GetName(), 'XPerl_Player', 1, true) ~= 1  then
 					local nX, nY = self::GetCenter(node:GetRect())
 					local dX, dY, dist = self::AbsXY(tX, nX, tY, nY)
 
